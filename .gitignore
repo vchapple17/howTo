@@ -3,4 +3,5 @@ node_modules
 DropboxSteps.docx
 npm-debug.log
 
+*.docx
 *.DS_Store
