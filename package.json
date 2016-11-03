@@ -1,0 +1,23 @@
+{
+  "name": "how-to",
+  "version": "1.0.0",
+  "description": "How to website for cs290",
+  "main": "index.js",
+  "scripts": {
+    "start" : "browserify src/main.js -o public/js/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vchapple17/howTo.git"
+  },
+  "author": "Valerie Chapple",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vchapple17/howTo/issues"
+  },
+  "homepage": "https://github.com/vchapple17/howTo#readme",
+  "dependencies": {
+    "browserify": "^13.1.0",
+    "dropbox": "^2.3.0"
+  }
+}
