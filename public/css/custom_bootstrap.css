@@ -1,4 +1,17 @@
-/* http://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap-3 */
+/*http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-accordion.php
+
+http://jsfiddle.net/nicos/JKqGc/
+*/
+
+/* container */
+
+.container {
+    padding: 0 50px;
+}
+
+/* Code outline from: 
+http://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap-3 
+*/
 /* navbar */
 .navbar-default {
     background-color: #515151;
@@ -23,14 +36,14 @@
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-    color: #999;
+    color: #FFF;
     background-color: #333;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
     color: #555;
-    background-color: #D5D5D5;
+    background-color: #badf9d;
 }
 /* caret */
 .navbar-default .navbar-nav > .dropdown > a .caret {
@@ -39,7 +52,7 @@
 }
 .navbar-default .navbar-nav > .dropdown > a:hover .caret,
 .navbar-default .navbar-nav > .dropdown > a:focus .caret {
-    border-top-color: #333;
+    border-top-color: #fff;
     border-bottom-color: #333;
 }
 .navbar-default .navbar-nav > .open > a .caret,
@@ -54,7 +67,7 @@
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-    background-color: #DDD;
+    background-color: #FFFFFF;
 }
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #CCC;
