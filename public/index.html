@@ -7,10 +7,12 @@
 
 <!--  BOOTSTRAP -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/custom_bootstrap.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<!--  CUSTOM STYLE  -->
+  <link rel="stylesheet" href="css/custom_bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
   <title>Dropbox API Tutorial</title>
 
 </head>
@@ -35,46 +37,119 @@
           <li class="dropdown active">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Learn <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li class="active"><a href="#">Getting Started</a></li>
-              <li><a href="#">Choose/Selector</a></li>
-              <li><a href="#">Authorization</a></li>
+              <li><a href="#getting_started">Getting Started</a></li>
+              <li><a href="#authentication">Authentication</a></li>
+              <li><a href="#chooser_saver">Chooser/Saver</a></li>
+              
             </ul>
 
           </li>
-          <li><a href="http://dropbox.github.io/dropbox-sdk-js/">Docs</a></li>
-          <li><a href="http://browserify.org/">Browserify</a></li>
-          <li><a href="#">Link 4</a></li>
+            <li><a href="http://dropbox.github.io/dropbox-sdk-js/">Docs</a></li>
+            <li><a href="https://nodejs.org/en/">Node.JS</a></li>
+            <li><a href="http://browserify.org/">Browserify</a></li>
         </ul>
       </div>
     </div>
   </nav>
 </div>
 <div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <h1>Dropbox API: <small>Tutorial</small></h1>
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Dropbox API: <small>Tutorial</small></h1>
+            <p>
+                Welcome to the exciting word of APIs.  With a little practice, APIs will become another handy tool for your web development career.
+            </p>
+            <p>
+                Specifically, we'll be looking at the <strong>Dropbox API with JavaScript</strong>.  The full documentation is available on GitHub: <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox-SDK-js</a>. 
+            </p>
+            <p>
+                In this tutorial, you will learn about:
+            </p>
+            <ul>
+                <li>Installing an API that utilizes <a href="https://nodejs.org/en/">Node.js</a></li>
+                <li>Selecting proper authentication based on needs</li>
+                <li>Navigating folders and files in Dropbox</li>
+            </ul>
+        </div>
     </div>
-  </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 id="getting_started">Getting Started</h2>
+            <p>
+                There are many languages to use with Dropbox.  This tutorial utilizes <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox for Javascript</a>. 
+            </p>
+            <h3>Installation</h3>
+            <p>
+                Follow the <a href="http://dropbox.github.io/dropbox-sdk-js/">Dropbox JS documentation</a> to install Dropbox in your program folder with <a href="https://www.npmjs.com/">npm</a>.
+            </p>
+            <p>
+                Because we will be using Node to access Dropbox, we will need a way to bundle our JavaScript files into a single file.  This is where <a href="http://browserify.org/">Browserify</a> comes into play. Browserify allows us to use <code>require('dropbox')</code>.
+            </p>
+            <p>In the same folder you installed Dropbox, install Browserify with the following command.</p>
+            <pre>npm install browserify --save</pre>
+            
+            <h3>Register Your App</h3>
+            <p>
+                Dropbox is a service that requires login. Whether you are wishing to access your own Dropbox files or the user's Dropbox files, you will need to register your website as a new app on Dropbox.
+            </p>
+            <ol>
+                <li>Go to Dropbox Developers to <a href="https://www.dropbox.com/developers/apps/create">Create app</a>.</li>
+                <li>Choose the Dropbox API.</li>
+                <li>Choose the Full Dropbox option.</li>
+                <li>Name your app.</li>
+            </ol>
+            <p>
+                You can find all your registered apps at <a href="https://www.dropbox.com/developers/apps">My Apps</a> on Dropbox Developers. This is also where you can adjust settings for your app or even delete your app from the Dropbox service.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 id="authentication">Authentication</h2>
+            <p>
+                Dropbox authenticates users using OAuth 2 flow. That is, you must ask for access to files from your users. Once approved, an access token is returned, which allows you to access their Full Dropbox.
+            </p>
+            <p>
+                A demonstration is below. Click the button below to be directed towards Dropbox's authentication screen.
+            </p>
+            <button class="btn">Get Dropbox Files</button>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 id="chooser_saver">Chooser/Saver</h2>
+            <p>
+                Dropbox has two easy to use programs
+            </p>
+        </div>
+    </div>
+    
+</div>
+  <!-- <script type="text/javascript" src="./js/bundle.js"></script> -->
+</body>
+</html>
+
+
+
+<!--  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="sun5xi238cq8lw9"></script>-->
+    
+<!--
   <div class="row">
-    <div class="col-xs=4">
+    <div class="col-xs-4">
       This is an example of inline code:<br \>
       <code>&lt;div&gt;Hello, world!&lt;/div&gt;</code>
     </div>
-    <div class="col-xs=4">
+    <div class="col-xs-4">
       This is an example of a block of code:<br \>
       <pre>&lt;div&gt;Hello, world!&lt;/div&gt;</pre>
     </div>
-    <div class="col-xs=4"></div>
+    <div class="col-xs-4"></div>
   </div>
 
   <div class="row">
-    <div class="col-xs=4"></div>
-    <div class="col-xs=4"></div>
-    <div class="col-xs=4"></div>
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4"></div>
   </div>
-</div>
-  <!-- <script type="text/javascript" src="./js/bundle.js"></script> -->
-  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="sun5xi238cq8lw9"></script>
-</body>
-</html>
+-->
