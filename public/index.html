@@ -76,7 +76,6 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            
             <h2 id="getting_started">Getting Started</h2>
             
             
@@ -84,7 +83,7 @@
                 There are many languages to use with Dropbox, but this tutorial utilizes <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox for Javascript</a>. While there is a way to use Dropbox in a script tag directly, We'll be using <strong>node</strong> to include the Dropbox node module in our webpage's JavaScript file. To use node in a web browser, we'll have to do quite a bit of setup. However, the preparation work is worth it for future use of this code.
             </p>
             <p>
-                If you already know how to complete the following tasks, skip to the <a href="#authentication">Authentication</a> section, which is where the API fun begins.
+                If you already know how to complete the following tasks, skip to the <a href="#register">Register Your App</a> section or <a href="#authentication">Authentication</a> section, which is where the API fun begins.
             </p>
             <ol>
                 <li>
@@ -97,7 +96,7 @@
                 </ul>
                 <li><a href="#using_start_script">Set Up</a> a npm start script for Browserify</li>
                 <li>
-                    <a href="#register">Register</a> our app with Dropbox Developers.
+                    <a href="#watchify">Install and Set Up</a> an optional node module Watchify. 
                 </li>
             </ol>
             
@@ -130,18 +129,6 @@
                 Install Browserify with the following command in the same folder you installed Dropbox.  You'll see that Browserify will be added to the dependencies list in <strong>package.json</strong>.
             </p>
             <pre>npm install browserify --save</pre>
-            <p>
-                
-            </p>
-            
-            <h4>Optional: Watchify</h4>
-            <p>
-                The following step is not necessary, but it prevents you from having to manually run Browserify after changes to your JavaScript file.
-            </p>
-            <p>
-                Install the node module <a href="https://www.npmjs.com/package/watchify">Watchify</a>, which will continually <em>watch</em> for changes in your JavaScript file and run Browserify when changes occur.
-            </p>
-            <pre>npm install watchify --save</pre>
             
             <h4>Running Browserify</h4>
             <p>
@@ -162,15 +149,29 @@
             </p>    
             <pre>"scripts": {<br />    "start": "browserify main.js -o bundle.js"<br>}</pre>
             <p>
+                Once this script is saved in the package.json, you can run it in the commandline.
+            </p>
+            <pre>npm start</pre>
+            <p>
                 For more information on scripts, you can visit <a href="https://docs.npmjs.com/misc/scripts">npm's documentation</a>
             </p>
 
-            <h4>Using Optional Watchify</h4>
+            
+            <h3 id="watchify">Optional: Watchify</h4>
             <p>
-                If you choose to use Watchify, you'll need to modify the start script in your app's package.json file. Replace the start script (if it exists) in the package.json with the following code. 
+                The following step is not necessary, but it prevents you from having to manually run Browserify after changes to your JavaScript file.
+            </p>
+            <p>
+                Install the node module <a href="https://www.npmjs.com/package/watchify">Watchify</a>, which will continually <em>watch</em> for changes in your JavaScript file and run Browserify when changes occur.
+            </p>
+            <pre>npm install watchify --save</pre>
+            <p>
+                If you choose to use Watchify, you'll need to modify the start script in your app's package.json file. Replace the start script in the package.json with the following code. 
             </p>
             <pre>start": "watchify main.js -o bundle.js"</pre>
-            
+            <p>
+                When you use <code>npm start</code> from the commandline while in your app's folder, you will see watchify continually running, updating on each change of your <strong>main.js</strong> file. (To quit the process, press <kbd>ctrl+C</kbd>.)
+            </p>
             
             <h3 id="register">Register Your App</h3>
             <p>
