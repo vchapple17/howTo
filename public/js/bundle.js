@@ -4331,35 +4331,78 @@ var Dropbox = require('dropbox');
 var Key = require('./priv.js');
 var key = new Key();
 
+var token = null;
+var baseUrl = "http://localhost:8080/";
+
 document.addEventListener('DOMContentLoaded', bindAuth);
+window.addEventListener('load', scrollToHash);
+
+function scrollToHash() {
+    if (window.location.hash !== null) {
+        var hash = window.location.hash;
+        if (hash === "#getting_started") {
+            $('#collapseGettingStarted').collapse({
+                toggle: true
+            });
+        }
+        else if (hash === "#authentication") {
+            $('#collapseAuth').collapse({
+                toggle: true
+            });
+        }
+        location.hash = hash;
+        
+    }
+}
 
 function bindAuth() {
     
-    // Add listeners
+    // Add Dropbox listeners
     var getFilesBtn = document.getElementById('getFilesBtn');
-    
     if (getFilesBtn !== null) {
         getFilesBtn.addEventListener('click', function(e) {
             // on click set up authorization URL with app's client id and set up authentication redirect url
             var myDropbox = new Dropbox({ clientId: key.getKey()});
-            var url = myDropbox.getAuthenticationUrl('http://localhost:8080/');
+            var url = myDropbox.getAuthenticationUrl(baseUrl);
             window.location = url;
         });
-    }
+    };
+    
+    // BOOTSTRAP LISTENERS
+    $('#collapseGettingStarted').on('shown.bs.collapse', function () {
+        window.location.hash = "getting_started";
+    });
+    $('#collapseGettingStarted').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+    });
+    
+    $('#collapseAuth').on('shown.bs.collapse', function () {
+        window.location.hash = "authentication";
+    });
+    
+    $('#collapseAuth').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+    });
+    
+    $('#collapseChooserSaver').on('shown.bs.collapse', function () {
+        window.location.hash = "chooser_saver";
+    });
+    
+    $('#collapseChooserSaver').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+    });
     
     // Display appropriate divs
     if(isAuth()) {
-        console.log("isAuth = true");
         // If authorized, show files div
         document.getElementById("no_auth_div").style.display = 'none';
         document.getElementById("authed_div").style.display = 'block';
         
         // Get files from dropbox
-        var accessToken = getAccessTokenFromUrl()
-        var myDropbox = new Dropbox({ accessToken: accessToken});
+//        var accessToken = getAccessTokenFromUrl()
+        var myDropbox = new Dropbox({ accessToken: token});
         
         myDropbox.filesListFolder({path: ''}).then(function(response) {
-            console.log("response");
             // returns: http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderResult
             displayFiles(response.entries);
             // enterieshttp://dropbox.github.io/dropbox-sdk-js/global.html#FilesFileMetadata
@@ -4367,11 +4410,10 @@ function bindAuth() {
         }, function(error) {
             console.error(error);
         })
-        // Render files as list items
+        location.hash = "#authentication";
     }
     else {
         // Not authorized, show button
-        console.log("isAuth = false");
         document.getElementById("no_auth_div").style.display = 'block';
         document.getElementById("authed_div").style.display = 'none';
     }
@@ -4379,10 +4421,8 @@ function bindAuth() {
     // Function to determine if user is authenticated.
     function isAuth(){
         // Check authorization
-        console.log("isAuth");
-        
         // See if access token is in URL
-        var token = getAccessTokenFromUrl();
+        token = getAccessTokenFromUrl();
         if ((token === null) || (token === 'access_denied')) {
             return false;
         }

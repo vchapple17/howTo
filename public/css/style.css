@@ -1,16 +1,17 @@
-/* HEADERS */
-/*"start" : "browserify src/main.js -o public/js/bundle.js",*/
+/* Nav bar padding*/
+body {
+    padding-top: 70px;
+}
+
+.spacer {
+    height: 70px;
+}
+
+/* TAGS */
 h1 {
     font-size: 50px;
     font-weight: 600;
     margin-top: 30px;
-    text-align: justify;
-}
-
-h2 {
-    font-size: 30px;
-    font-weight: 600;
-    margin-top: 40px;
     text-align: justify;
 }
 
@@ -32,16 +33,11 @@ h4 {
 h1 > small {
     color: #badf9d;
 }
+
 p, li {
     font-size: 18px;
     text-align: justify;
     font-family: sans-serif
-}
-
-a {
-    font-weight: 700;
-    font-family: monospace;
-    color: #9dbadf;
 }
 
 code {
@@ -58,6 +54,27 @@ pre {
     margin: 20px 0px 20px 0px;
 }
 
+
+/* PANELS */
+.panel .panel-body a {
+    font-weight: 700;
+    font-family: monospace;
+    color: #9dbadf;
+}
+
+.panel-heading h2 a, .panel-heading h2 a:hover {
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: 40px;
+    text-align: justify;
+    text-decoration: none;
+}
+
+.panel-heading h2 a:hover {
+    color: #9dbadf;
+}
+
+/* CLASSES */
 .btn {
     margin: 10px;
     font-weight: 500;
@@ -73,6 +90,11 @@ pre {
     display: none;
 }
 
+.row {
+    margin-bottom: 40px;
+}
+
+/* ID */
 #abstract {
     font-size: 20px;
     font-weight: 400;
