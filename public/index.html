@@ -55,40 +55,124 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1>Dropbox API: <small>Tutorial</small></h1>
-            <p>
-                Welcome to the exciting word of APIs.  With a little practice, APIs will become another handy tool for your web development career.
-            </p>
-            <p>
-                Specifically, we'll be looking at the <strong>Dropbox API with JavaScript</strong>.  The full documentation is available on GitHub: <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox-SDK-js</a>. 
-            </p>
-            <p>
-                In this tutorial, you will learn about:
-            </p>
+            <h1>Dropbox API: <small>A Beginner's Tutorial</small></h1>
+            <h3>
+                Welcome to the exciting world of APIs.  With a little practice, APIs will become another handy tool for your web development career.
+            </h3>
+<!--            <h3 id="abstract">-->
+                <p id="abstract">
+                    This tutorial is geared towards a <strong>beginning web developer</strong> who has had some programming language experience. We'll walk you through the setup for using the <strong>Dropbox API with JavaScript</strong>, but you can also see the full documentation on GitHub: <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox-SDK-js</a>. 
+                </p>
+<!--            </h3>-->
+            <h2>Learning Goals</h2>
             <ul>
-                <li>Installing an API that utilizes <a href="https://nodejs.org/en/">Node.js</a></li>
-                <li>Selecting proper authentication based on needs</li>
-                <li>Navigating folders and files in Dropbox</li>
+                <li>Use Browserify to bundle JavaScript files for use in a browser</li>
+                <li>Register an app through Dropbox Developers</li>
+                <li>Authenticate Dropbox users via a URL</li>
+<!--                <li>Selecting proper authentication based on needs</li>-->
+                <li>Navigate folders and files in Dropbox</li>
             </ul>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <h2 id="getting_started">Getting Started</h2>
-            <p>
-                There are many languages to use with Dropbox.  This tutorial utilizes <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox for Javascript</a>. 
-            </p>
-            <h3>Installation</h3>
-            <p>
-                Follow the <a href="http://dropbox.github.io/dropbox-sdk-js/">Dropbox JS documentation</a> to install Dropbox in your program folder with <a href="https://www.npmjs.com/">npm</a>.
-            </p>
-            <p>
-                Because we will be using Node to access Dropbox, we will need a way to bundle our JavaScript files into a single file.  This is where <a href="http://browserify.org/">Browserify</a> comes into play. Browserify allows us to use <code>require('dropbox')</code>.
-            </p>
-            <p>In the same folder you installed Dropbox, install Browserify with the following command.</p>
-            <pre>npm install browserify --save</pre>
             
-            <h3>Register Your App</h3>
+            <h2 id="getting_started">Getting Started</h2>
+            
+            
+            <p>
+                There are many languages to use with Dropbox, but this tutorial utilizes <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox for Javascript</a>. While there is a way to use Dropbox in a script tag directly, We'll be using <strong>node</strong> to include the Dropbox node module in our webpage's JavaScript file. To use node in a web browser, we'll have to do quite a bit of setup. However, the preparation work is worth it for future use of this code.
+            </p>
+            <p>
+                If you already know how to complete the following tasks, skip to the <a href="#authentication">Authentication</a> section, which is where the API fun begins.
+            </p>
+            <ol>
+                <li>
+                    <a href="#install">Install</a> all the necessary programs in our app's folder. 
+                </li>
+                <ul>
+                    <li>Node with npm</li>
+                    <li>Dropbox (node module)</li>
+                    <li>Browserify (node module)</li>
+                </ul>
+                <li><a href="#using_start_script">Set Up</a> a npm start script for Browserify</li>
+                <li>
+                    <a href="#register">Register</a> our app with Dropbox Developers.
+                </li>
+            </ol>
+            
+            <h3 id="install">Installation</h3>
+            
+            <h4>Node and npm</h4>
+            <p>
+                To start, make sure you have installed <strong>node.js</strong> and updated the included <strong>npm</strong>. If you do not have node and/or have not updated, follow the Getting Started instructions provided at <a href="https://docs.npmjs.com/getting-started/installing-node">npmjs.com</a>.
+            </p>
+            <p>
+                Also, we want to easily keep track of node packages, so we need to initialize npm, which creates a <strong>package.json</strong> file.  To create a package.json file, run the following command in your app's folder.
+            </p>
+            <pre>npm init</pre>
+            <p> 
+            </p>
+            <p>
+                Once you have initialized a package.json, you can document your app's dependencies by using the <code>--save</code> option when installing any node package.  This allows for easy reinstallation of all necessary programs in the event the node modules are deleted or omitted. For more information on the package.json file, you can visit <a href="https://docs.npmjs.com/getting-started/using-a-package.json">"Using a Package.json"</a>.
+            </p>
+            
+            <h4>Dropbox SDK</h4>
+            <p>
+                Once you have node and npm correctly installed, follow the <a href="http://dropbox.github.io/dropbox-sdk-js/">Dropbox JS documentation</a> to install Dropbox using npm. Notice the <code>--save</code> option, which will log 'dropbox' in your package.json. We will <strong>not</strong> being using the unpkg method with script tags.
+            </p>
+            
+            <h4>Browserify</h4>
+            <p>
+                Because we will be using node to access Dropbox, we will need a way to bundle our JavaScript files into a single, browser-friendly JavaScript file.  This step is necessary because web browsers do not have a way to interpret <code>require('dropbox')</code>. This is where <a href="http://browserify.org/">Browserify</a> comes to the rescue by combining our JavaScript file and all its dependencies into a single file. This single file is the script file we will then link in our web page.
+            </p>
+            <p>
+                Install Browserify with the following command in the same folder you installed Dropbox.  You'll see that Browserify will be added to the dependencies list in <strong>package.json</strong>.
+            </p>
+            <pre>npm install browserify --save</pre>
+            <p>
+                
+            </p>
+            
+            <h4>Optional: Watchify</h4>
+            <p>
+                The following step is not necessary, but it prevents you from having to manually run Browserify after changes to your JavaScript file.
+            </p>
+            <p>
+                Install the node module <a href="https://www.npmjs.com/package/watchify">Watchify</a>, which will continually <em>watch</em> for changes in your JavaScript file and run Browserify when changes occur.
+            </p>
+            <pre>npm install watchify --save</pre>
+            
+            <h4>Running Browserify</h4>
+            <p>
+                Later, when we want to use our JavaScript file <strong>main.js</strong> in a web browser, we can use Browserify to combine <strong>main.js</strong> and its node dependencies into a single file called <strong>bundle.js</strong>. To do so, open the commandline in your app's folder, and run the following command.
+            </p>
+            <pre>browserify main.js -o bundle.js</pre> 
+            <p>
+                Note, that the first file (<strong>main.js</strong>) must exist while the second file is created or overwritten.  Then, in your web page, you will link to the second file (<strong>bundle.js</strong>). Of course, like most commandline actions you can also specify location of the filenames, and the names can be different than <strong>main.js</strong> or <strong>bundle.js</strong>.
+            </p>
+            
+            <h3 id="using_start_script">Using a Start Script</h3>
+            <p>
+                To help developers, npm has scripting capabilities.
+            </p>
+            <h4>Using Browserify</h4>
+            <p>
+                In the <strong>package.json</strong> file, you can see a variety of information, including a list of the app dependencies from the <code>--save</code> option.  In particular, look at the script section, which we will modify to include Browserify.
+            </p>    
+            <pre>"scripts": {<br />    "start": "browserify main.js -o bundle.js"<br>}</pre>
+            <p>
+                For more information on scripts, you can visit <a href="https://docs.npmjs.com/misc/scripts">npm's documentation</a>
+            </p>
+
+            <h4>Using Optional Watchify</h4>
+            <p>
+                If you choose to use Watchify, you'll need to modify the start script in your app's package.json file. Replace the start script (if it exists) in the package.json with the following code. 
+            </p>
+            <pre>start": "watchify main.js -o bundle.js"</pre>
+            
+            
+            <h3 id="register">Register Your App</h3>
             <p>
                 Dropbox is a service that requires login. Whether you are wishing to access your own Dropbox files or the user's Dropbox files, you will need to register your website as a new app on Dropbox.
             </p>
@@ -101,18 +185,31 @@
             <p>
                 You can find all your registered apps at <a href="https://www.dropbox.com/developers/apps">My Apps</a> on Dropbox Developers. This is also where you can adjust settings for your app or even delete your app from the Dropbox service.
             </p>
+            
+            
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
             <h2 id="authentication">Authentication</h2>
             <p>
-                Dropbox authenticates users using OAuth 2 flow. That is, you must ask for access to files from your users. Once approved, an access token is returned, which allows you to access their Full Dropbox.
+                Dropbox authenticates users using OAuth 2 flow. That is, you must ask for access to files from your users. Once approved, an access token is returned, which allows you to access the user's Dropbox.
             </p>
-            <p>
-                A demonstration is below. Click the button below to be directed towards Dropbox's authentication screen.
-            </p>
-            <button class="btn">Get Dropbox Files</button>
+            
+            <h3>Demo</h3>
+            <div id="no_auth_div" class="startHidden">
+                <p>This website is currently not authorized to access your Dropbox files. Click the button below to be directed towards Dropbox's authentication screen. After authenticating your Dropbox, the names of ten of your files and folders will be listed below.</p>
+                <div class="center">
+                    <button class="btn" id="getFilesBtn">Get Dropbox Files</button>
+                </div>
+            </div>
+            <div id="authed_div" class="startHidden">
+                <p>You authenticated your Dropbox successfully.</p>
+                <p><em>Results:</em> Here are ten of your file/folder names:</p>
+                <div id="files">
+                </div>
+            </div>
+            
         </div>
     </div>
 
@@ -126,7 +223,7 @@
     </div>
     
 </div>
-  <!-- <script type="text/javascript" src="./js/bundle.js"></script> -->
+   <script type="text/javascript" src="./js/bundle.js"></script> 
 </body>
 </html>
 

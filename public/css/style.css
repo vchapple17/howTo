@@ -1,25 +1,41 @@
 /* HEADERS */
-
+/*"start" : "browserify src/main.js -o public/js/bundle.js",*/
 h1 {
     font-size: 50px;
     font-weight: 600;
     margin-top: 30px;
+    text-align: justify;
 }
 
 h2 {
     font-size: 30px;
     font-weight: 600;
     margin-top: 40px;
+    text-align: justify;
 }
 
 h3 {
     font-size: 25px;
     font-weight: 700;
     margin-top: 35px;
+    text-align: justify;
 }
 
+h4 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 20px;
+    font-style: italic;
+    color: #badf9d;
+}
+
+h1 > small {
+    color: #badf9d;
+}
 p, li {
     font-size: 18px;
+    text-align: justify;
+    font-family: sans-serif
 }
 
 a {
@@ -28,11 +44,39 @@ a {
     color: #9dbadf;
 }
 
-
-/* code */
+code {
+    white-space: nowrap;
+}
 code, pre {
     color: #badf9d;
     background-color: #515151;
     font-family: monospace;
     font-size: 18px;
+}
+
+pre {
+    margin: 20px 0px 20px 0px;
+}
+.btn {
+    margin: 10px;
+    font-weight: 500;
+    font-size: 120%;
+}
+
+.center {
+    text-align: center;
+    margin: auto;
+}
+
+.startHidden {
+    display: none;
+}
+
+#abstract {
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 20px;
+    font-style: oblique;
+    color: #777;
+    line-height: 30px;
 }
