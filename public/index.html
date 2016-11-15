@@ -28,7 +28,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Dropbox API Tutorial</a>
+        <a class="navbar-brand" href="http://localhost:8080">Dropbox API Tutorial</a>
       </div>
 
       <!--  MENU ITEMS -->
@@ -37,9 +37,10 @@
           <li class="dropdown active">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Learn <span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a id="getting_started_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseGettingStarted">Getting Started2</a></li>
-              <li><a id="authentication_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAuth">Authentication</a></li>
-              <li><a id = "choose_saver_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseChooserSaver">Chooser/Saver</a></li>
+                <li><a id="getting_started_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseGettingStarted">Getting Started</a></li>
+                <li><a id="auth_demo_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAuthDemo">Demo</a></li>
+                <li><a id="authentication_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAuth">Authentication</a></li>
+                <li><a id = "choose_saver_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseChooserSaver">Chooser/Saver</a></li>
               
             </ul>
 
@@ -59,9 +60,9 @@
             <h3>
                 Welcome to the exciting world of APIs.  With a little practice, APIs will become another handy tool for your web development career.
             </h3>
-                <p id="abstract">
-                    This tutorial is geared towards a <strong>beginning web developer</strong> who has had some programming language experience. We'll walk you through the setup for using the <strong>Dropbox API with JavaScript</strong>, but you can also see the full documentation on GitHub: <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox-SDK-js</a>. 
-                </p>
+            <p id="abstract">
+                This tutorial is geared towards a <strong>beginning web developer</strong> who has had some programming language experience. We'll walk you through the setup for using the <strong>Dropbox API with JavaScript</strong>, but you can also see the full documentation on GitHub: <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox-SDK-js</a>. 
+            </p>
             <h2>Learning Goals</h2>
             <ul>
                 <li>Use Browserify to bundle JavaScript files for use in a browser</li>
@@ -75,9 +76,8 @@
     
     <div class="row">
         <div class="col-xs-12">
-            
             <div id="pageContent" class="panel-group">
-<!--                <div id="getting_started" class="spacer"> </div>-->
+                <div id="getting_started_spacer" class="navbarSpacer" style="display:none"></div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="getting_started" class="panel-title">
@@ -90,9 +90,7 @@
                             <p>
                                 There are many languages to use with Dropbox, but this tutorial utilizes <a href="https://github.com/dropbox/dropbox-sdk-js">Dropbox for Javascript</a>. While there is a way to use Dropbox in a script tag directly, We'll be using <strong>node</strong> to include the Dropbox node module in our webpage's JavaScript file. To use node in a web browser, we'll have to do quite a bit of setup. However, the preparation work is worth it for future use of this code.
                             </p>
-                            <p>
-                                If you already know how to complete the following tasks, skip to the <a href="#register">Register Your App</a> section or <a href="#authentication">Authentication</a> section, which is where the API fun begins.
-                            </p>
+                             <h3>Setup Overview</h3>
                             <ol>
                                 <li>
                                     <a href="#install">Install</a> all the necessary programs in our app's folder. 
@@ -107,7 +105,10 @@
                                     <a href="#watchify">Install and Set Up</a> an optional node module Watchify. 
                                 </li>
                             </ol>
-
+                             <h3>Don't need the setup?</h3>
+                            <p>
+                                If you already know how to complete the above tasks, skip to the <a href="#register">Register Your App</a> section or <a href="#authentication">Authentication</a> section, which is where the API fun begins.  Specifically, Step 2 is the first instance of using JavaScript to utilize the API.
+                            </p>
                             <h3 id="install">Installation</h3>
 
                             <h4>Node and npm</h4>
@@ -146,8 +147,8 @@
                             <p>
                                 Note, that the first file (<strong>main.js</strong>) must exist while the second file is created or overwritten.  Then, in your web page, you will link to the second file (<strong>bundle.js</strong>). Of course, like most commandline actions you can also specify location of the filenames, and the names can be different than <strong>main.js</strong> or <strong>bundle.js</strong>.
                             </p>
-
-                            <h3 id="using_start_script">Using a Start Script</h3>
+                                
+                             <h3 id="using_start_script" class="jumptarget">Using a Start Script</h3>
                             <p>
                                 To help developers, npm has scripting capabilities.
                             </p>
@@ -199,17 +200,16 @@
                     </div>
                 </div>
                 
-<!--                <div id="authentication" class="spacer"> </div>-->
+                <div id="auth-demo_spacer" class="navbarSpacer" style="display:none"></div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h2 id="authentication" class="panel-title">
-                            <a data-toggle="collapse" data-parent="#pageContent" href="#collapseAuth">Authentication</a>
+                        <h2 id="auth-demo" class="panel-title">
+                            <a data-toggle="collapse" data-parent="#pageContent" href="#collapseAuthDemo" aria-expanded="false">Authentication Demo</a>
                         </h2>
                     </div>
                 
-                     <div id="collapseAuth" class="panel-collapse collapse bodyCollapse" aria-expanded="false">
-                         <div class="panel-body">
-                             
+                    <div id="collapseAuthDemo" class="panel-collapse collapse" aria-expanded="false">
+                        <div class="panel-body">
                             <p>
                                 Dropbox authenticates users using OAuth 2 flow. That is, you must ask for access to files from your users. Once approved, an access token is returned, which allows you to access the user's Dropbox.
                             </p>
@@ -222,20 +222,194 @@
                                 </div>
                             </div>
                             <div id="authed_div" class="startHidden">
-                                <p>You authenticated your Dropbox successfully.</p>
+                                <p>You authenticated your Dropbox successfully. The access token can be stored in a cookie. If you refresh on this webpage, you will have to re-authenticate to run the demo.</p>
                                 <p><em>Results:</em> Here are ten of your file/folder names:</p>
                                 <div id="files">
                                 </div>
-                                
                             </div>
-                         </div>
+                        </div>
                     </div>
-                </div>
-            
+                </div> 
                 
-
                 
-<!--                <div id="chooser_saver" class="spacer"> </div>-->
+                <div id="authentication_spacer" class="navbarSpacer" style="display:none"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 id="authentication" class="panel-title">
+                            <a data-toggle="collapse" data-parent="#pageContent" href="#collapseAuth" aria-expanded="false">Authentication Tutorial</a>
+                        </h2>
+                    </div>
+                
+                    <div id="collapseAuth" class="panel-collapse collapse" aria-expanded="false">
+                        <div class="panel-body">
+                            <p>
+                                Authentication can look intimidating, but Dropbox uses URL's to request authentication and send a response.
+                            </p>
+                            <h3>Overview</h3>
+                            <p>
+                                To display or try to access a user's Dropbox, we have to have a valid <strong>access token</strong>. To get an access token, the user must request us to have access to their Dropbox. In the case of the demo, the user clicks a button. On the button click, we use the Dropbox SDK to process the request for an access token. Once approved or denied, Dropbox redirects the user back to our page by using a return URI, which we set up as the location that we will handle the response from Dropbox.
+                            </p>
+                            <p>
+                                Once the user has accepted the request for access into their Dropbox, we can use the access token to create a Dropbox object in our JavaScript.  The Dropbox object can then make requests about files and user information.
+                            </p>
+                            <h3>Steps</h3>
+                            <ol>
+                                <li>Set a redirect URI for our app on Dropbox and record the App key.</li>
+                                <li>Create an event listener to determine when and how to request authentication.</li>    
+                                <li>Create a function to check for authentication from the URL.</li>
+                                <li>Set up logic to handle html for case of authenticated and not authenticated.</li>
+                                <li>Access and Navigate the user's Dropbox</li>
+                            </ol>
+                            
+                            <h3>Step 1: Redirect URI and App Key</h3>
+                            <p>
+                                When authenticating a user, we must provide Dropbox with a return address (<strong>redirect URI</strong>) to which to send the authentication results, as well as our app's key.
+                            </p>
+                            <ol>
+                                <li>
+                                    Determine the URI you wish to handle the returned authentication URL from Dropbox.
+                                    <ul>
+                                        <li>For testing, you could use <code>http://localhost:</code> followed by the appropriate port number.</li>
+                                        <li>For live sites, you will need to use a URI starting with <code>https://</code></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Register your app's redirect URI by navigating to your app in <a href="https://www.dropbox.com/developers/apps">apps on Dropbox</a>.  Then, under the <em>OAuth 2</em> section of your specific app, submit the redirect URI to your app.
+                                </li>
+                                <li>
+                                    On the same web page, record for your reference your app's key under the <em>App key</em> section.  
+                                </li>
+                            </ol>
+                            <p>
+                                <strong><em>Note</em></strong>: This tutorial will not show how to keep your key private, but you need to secure your app key so that only your sites have access. Some protection is given in the fact that you must register your redirect URIs with Dropbox.
+                            </p>
+                            <h3>Step 2: Request Authentication.</h3>
+                            <p>
+                                Let's finally begin the fun stuff. We'll be working with our <strong>main.js</strong> file from the <a href="#getting_started">Getting Started</a> section. The <strong>main.js</strong> file is the file in which we will use Dropbox. It is also the file that is compiled into <strong>bundle.js</strong> with Broswerfiy. Recall that <strong>bundle.js</strong> is the file that you will include in your html file.
+                            </p>
+                            
+                            <h4>Include Dropbox</h4>
+                            <p>
+                                To use the JavaScript for Dropbox, you will need to require the node module called 'dropbox' by adding <code>var Dropbox = require('dropbox');</code> to the top of <strong>main.js</strong>.  This will allow us to create a new instance of Dropbox for our app.
+                            </p>
+                            <h4>Request Listener</h4>
+                            <p>
+                                Next, the user must request to access their Dropbox through your app.  In our <a href="#auth-demo">demo</a>, you clicked on a button to start this request process.
+                            <p>
+                                To follow the demo example, use JavaScript to get the particular button you wish to use to start the request for access to the user's Dropbox.  Then, add an onClick eventListener and pass it a function to create the authentication URL.
+                            </p>
+                            <p>
+                                If you use a button with the id of <em>getFilesBtn</em>, you can add this onClick event listener to that button with the following code.
+                            </p>
+                            <pre>1  var getFilesBtn = document.getElementById('getFilesBtn');
+2  
+3  getFilesBtn.addEventListener('click', function(e) {
+4      var myDropbox = new Dropbox({ clientId: APP_KEY});
+5      var url = myDropbox.getAuthenticationUrl(baseUrl);
+6      window.location = url;
+7  };</pre>
+                            <blockquote>
+                                <p>
+                                    <strong>Line 4</strong> In the above code, line 4 creates an instance of the Dropbox object called <code>myDropbox</code>. You must set the object's property of <code>clientId</code> to your app's key (<code>APP_KEY</code>), which you found in Step 1.
+                                </p>
+                                <p>
+                                    <strong>Line 5</strong> Once the Dropbox instance is created with your app's key, you need to direct the user's browser to the Dropbox authentication website.  Dropbox makes this process very user-friendly by having a <code>getAuthenticationUrl()</code> method. This new URL is created by calling <code>myDropbox.getAuthenticationUrl(baseUrl)</code>, where baseURL is the redirect URI you registered with Dropbox.
+                                </p>
+                                <p>
+                                    <strong>Line 6</strong> Next, set the <code>window.location</code> to the returned URL from the <code>.getAuthenticationUrl()</code> method.
+                                </p>
+                            </blockquote>
+                            <p>
+                                Once the user has clicked the button, the user will be directed to authenticate your app through Dropbox's website.  Once the user approves or denies your app access, the user will be directed to the redirect URI, which was stored in the <code>baseUrl</code> variable.
+                            </p>
+                            
+                            <h3>Step 3: Get Access Token From URL</h3>
+                            <p>
+                                When a user accepts or denies your app access, Dropbox will send the user back to your website (via the redirect URI) and append a query string to this URL.  In this query string you will see various key/value pairs, possibly including a key called <strong>access_token</strong>.
+                            </p>
+                            <h4>Create a Function to Parse URL</h4>
+                            <p>
+                                Create a function called <code>getAccessTokenFromURL()</code>.  You will be able to call this function in your <strong>main.js</strong> file after a user has attempted to authenticate your app.
+                            </p>
+                            <p>
+                                Inside this function, get the query string from the hash of the window's URL.
+                            </p>
+                            <pre>1  function getAccessTokenFromURL(){
+2      var query = window.location.hash;
+3  };</pre>
+                            <p>     
+                                You now need to parse the query string. There are many ways to parse the URL to get the access token. However, below is a simple method using regular expressions to find and return the access token.  Additionally, if there is no access token, but there is an error, then the string value of the error is returned.  If there is not query string, no access token, and no error, then the <code>null</code> is returned from the function.
+                            </p>
+                            
+                            <div class="longCode"><h5>Scroll for All Code</h5><pre>1  function getAccessTokenFromUrl() {
+2      var query = window.location.hash;
+3      var result = null;
+4      if (typeof query === 'string') {
+5          <span class="comment">// Remove leading and trialing white space</span>
+6          query.trim();
+7          
+8          <span class="comment">// Replace the # sign at beginning</span>
+9          query.replace(/^#/)
+10         
+11         <span class="comment">// Check that string exists</span>
+12         if (query.length == 0) {
+13             return null;
+14         }
+15         else {
+16             <span class="comment">// Split the pairs of key/value by "&amp;"</span>
+17             var parts = query.split("&amp;");
+18             for (var i = 0; i &lt; parts.length; i++) {    
+19                 var part = parts[i];
+20                 if (part.match('access_token=')){ <span class="comment">// Find access_token</span>
+21                     result = part.split('=')[1]; 
+22                     return result;
+23                  }
+24                  else if (part.match('error=')) { <span class="comment">// Find error</span>
+25                      result = part.split('=')[1];
+26                      return result;
+27                  }
+28              }
+29          }
+30      }
+31      return null;
+32  };</pre></div>
+                            <p>     
+                                <strong>Note</strong>: The query string can also be parsed into an object of the keys and a values, which can be returned by the fuction.
+                            </p>
+                            <h3>Step 4: Conditional HTML</h3>
+                            <p>
+                                token is a global variable, but can be stored elsewhere for persistence.  We store it temporarily so that the user can jump from section to section on this page without losing their authentication.
+                                
+                            </p>
+                            
+                            <pre>1  function isAuth(){        
+2       <span class="comment">// See if access token has a value, else get from URL</span>
+3       if (token === null) {
+4            token = getAccessTokenFromUrl();
+5       }
+6
+7       if ((token === null) || (token === 'access_denied')) {
+8            return false;
+9       }
+10      else {
+11           return true;
+12      }
+13  };</pre>
+                            <h4>
+                                Determine what you want authenticated and non-auth to view
+                            </h4>
+                            <h4>
+                                
+                            </h4>
+                            <h3>Step 5: Accessing a User's Dropbox</h3>
+                            <h3>Review</h3>
+                        </div>
+                    </div>
+                </div> 
+                
+                
+                
+                <div id="chooser_saver_spacer" class="navbarSpacer" style="display:none"></div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="chooser_saver" class="panel-title">
@@ -243,7 +417,7 @@
                         </h2>
                     </div>
                 
-                     <div id="collapseChooserSaver" class="panel-collapse collapse">
+                     <div id="collapseChooserSaver" class="panel-collapse collapse"  aria-expanded="false">
                          <div class="panel-body">
                             <p>
                                 Dropbox has two easy to use programs...
@@ -260,27 +434,3 @@
    <script type="text/javascript" src="./js/bundle.js"></script> 
 </body>
 </html>
-
-
-
-<!--  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="sun5xi238cq8lw9"></script>-->
-    
-<!--
-  <div class="row">
-    <div class="col-xs-4">
-      This is an example of inline code:<br \>
-      <code>&lt;div&gt;Hello, world!&lt;/div&gt;</code>
-    </div>
-    <div class="col-xs-4">
-      This is an example of a block of code:<br \>
-      <pre>&lt;div&gt;Hello, world!&lt;/div&gt;</pre>
-    </div>
-    <div class="col-xs-4"></div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-4"></div>
-    <div class="col-xs-4"></div>
-    <div class="col-xs-4"></div>
-  </div>
--->

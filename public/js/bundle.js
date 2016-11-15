@@ -4334,29 +4334,99 @@ var key = new Key();
 var token = null;
 var baseUrl = "http://localhost:8080/";
 
+document.addEventListener('DOMContentLoaded', setUpBootstrapListeners);
 document.addEventListener('DOMContentLoaded', bindAuth);
 window.addEventListener('load', scrollToHash);
 
+window.addEventListener('hashchange', handleHashChange);
+
+function handleHashChange(e) {
+    e.preventDefault();
+    scrollToHash();
+}
 function scrollToHash() {
     if (window.location.hash !== null) {
+
         var hash = window.location.hash;
+
         if (hash === "#getting_started") {
             $('#collapseGettingStarted').collapse({
                 toggle: true
             });
+            location.hash = hash;
+
+        }
+        else if (hash === "#auth-demo") {
+            $('#collapseAuthDemo').collapse({
+                toggle: true
+            });
+            location.hash = hash;
         }
         else if (hash === "#authentication") {
             $('#collapseAuth').collapse({
                 toggle: true
             });
+            location.hash = hash;
         }
-        location.hash = hash;
-        
+        else if (hash === "#chooser_saver") {
+            $('#collapseChooserSaver').collapse({
+                toggle: true
+            });
+            location.hash = hash;
+        }
+
     }
 }
 
+function setUpBootstrapListeners() {
+    // BOOTSTRAP LISTENERS
+    $('#collapseGettingStarted').on('shown.bs.collapse', function () {
+        window.location.hash = "getting_started";
+        scrollToHash();
+        document.getElementById('getting_started_spacer').style.display = "block";
+    });
+    $('#collapseGettingStarted').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+        scrollToHash();
+        document.getElementById('getting_started_spacer').style.display = "none";
+    });
+
+    $('#collapseAuthDemo').on('shown.bs.collapse', function () {
+        window.location.hash = "auth-demo";
+        scrollToHash();
+        document.getElementById('auth-demo_spacer').style.display = "block";
+    });
+
+    $('#collapseAuthDemo').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+        scrollToHash();
+        document.getElementById('auth-demo_spacer').style.display = "none";
+    });
+
+
+    $('#collapseAuth').on('shown.bs.collapse', function () {
+        window.location.hash = "authentication";
+        scrollToHash();
+        document.getElementById('authentication_spacer').style.display = "block";
+    });
+
+    $('#collapseAuth').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+        scrollToHash();
+        document.getElementById('authentication_spacer').style.display = "none";
+    });
+
+    $('#collapseChooserSaver').on('shown.bs.collapse', function () {
+        window.location.hash = "chooser_saver";
+        document.getElementById('chooser_saver_spacer').style.display = "block";
+    });
+
+    $('#collapseChooserSaver').on('hidden.bs.collapse', function () {
+        window.location.hash = ""; document.getElementById('chooser_saver_spacer').style.display = "none";
+    });
+}
+
 function bindAuth() {
-    
     // Add Dropbox listeners
     var getFilesBtn = document.getElementById('getFilesBtn');
     if (getFilesBtn !== null) {
@@ -4367,62 +4437,41 @@ function bindAuth() {
             window.location = url;
         });
     };
-    
-    // BOOTSTRAP LISTENERS
-    $('#collapseGettingStarted').on('shown.bs.collapse', function () {
-        window.location.hash = "getting_started";
-    });
-    $('#collapseGettingStarted').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
-    });
-    
-    $('#collapseAuth').on('shown.bs.collapse', function () {
-        window.location.hash = "authentication";
-    });
-    
-    $('#collapseAuth').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
-    });
-    
-    $('#collapseChooserSaver').on('shown.bs.collapse', function () {
-        window.location.hash = "chooser_saver";
-    });
-    
-    $('#collapseChooserSaver').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
-    });
-    
+
+
     // Display appropriate divs
     if(isAuth()) {
         // If authorized, show files div
         document.getElementById("no_auth_div").style.display = 'none';
         document.getElementById("authed_div").style.display = 'block';
-        
+
         // Get files from dropbox
-//        var accessToken = getAccessTokenFromUrl()
         var myDropbox = new Dropbox({ accessToken: token});
-        
+
         myDropbox.filesListFolder({path: ''}).then(function(response) {
             // returns: http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderResult
             displayFiles(response.entries);
             // enterieshttp://dropbox.github.io/dropbox-sdk-js/global.html#FilesFileMetadata
-            
+            location.hash = "#auth-demo";
+            scrollToHash;
         }, function(error) {
             console.error(error);
         })
-        location.hash = "#authentication";
     }
     else {
         // Not authorized, show button
         document.getElementById("no_auth_div").style.display = 'block';
         document.getElementById("authed_div").style.display = 'none';
     }
-    
+
     // Function to determine if user is authenticated.
     function isAuth(){
         // Check authorization
         // See if access token is in URL
-        token = getAccessTokenFromUrl();
+        if (token === null) {
+            token = getAccessTokenFromUrl();
+        }
+        
         if ((token === null) || (token === 'access_denied')) {
             return false;
         }
@@ -4430,7 +4479,7 @@ function bindAuth() {
             return true;
         }
     }
-    
+
     // Function to parse the url hash for the access token
     function getAccessTokenFromUrl() {
         // If the url has an access_token, it is returned. Else null.
@@ -4439,10 +4488,10 @@ function bindAuth() {
         if (typeof URI === 'string') {
             // Remove leading and trialing white space
             URI.trim();
-            
+
             // Replace the # sign at beginning
             URI.replace(/^#/)
-            
+
             // Check that string exists
             if (URI.length == 0) {
                 return null;
@@ -4465,7 +4514,7 @@ function bindAuth() {
         }
         return null;
     };
-    
+
     // Function to display files of "FilesListFolderResult"
     function displayFiles(files){
         var filesDiv = document.getElementById('files');
@@ -4473,26 +4522,21 @@ function bindAuth() {
         var ol = document.createElement('ol');
         ol.id = "fileList";
         filesDiv.appendChild(ol);
-        
-//        files.forEach(function(file) {
-//            var li = document.createElement('li');
-//            li.innerHTML = file.name;
-//            ol.appendChild(li);
-//        });
 
         for (var i = 0; i < 10; i++) {
             var li = document.createElement('li');
             li.innerHTML = files[i].name;
             ol.appendChild(li);
         };
-        
+
+//        files.forEach(function(file) {
+//            var li = document.createElement('li');
+//            li.innerHTML = file.name;
+//            ol.appendChild(li);
+//        });
     };
 
 }
-
-
-
-
 
 },{"./priv.js":19,"dropbox":12}],19:[function(require,module,exports){
 function Key() {

@@ -3,7 +3,9 @@ body {
     padding-top: 70px;
 }
 
-.spacer {
+.navbarSpacer {
+    display: none;
+    content: " ";
     height: 70px;
 }
 
@@ -37,12 +39,13 @@ h1 > small {
 p, li {
     font-size: 18px;
     text-align: justify;
-    font-family: sans-serif
+    font-family: sans-serif;
 }
 
 code {
     white-space: nowrap;
 }
+
 code, pre {
     color: #badf9d;
     background-color: #515151;
@@ -53,7 +56,14 @@ code, pre {
 pre {
     margin: 20px 0px 20px 0px;
 }
+pre > .comment {
+    color: white;
+}
 
+div .longCode {
+    overflow: auto;
+    height: 500px;
+}
 
 /* PANELS */
 .panel .panel-body a {
@@ -65,7 +75,6 @@ pre {
 .panel-heading h2 a, .panel-heading h2 a:hover {
     font-size: 30px;
     font-weight: 600;
-    margin-top: 40px;
     text-align: justify;
     text-decoration: none;
 }
@@ -90,10 +99,6 @@ pre {
     display: none;
 }
 
-.row {
-    margin-bottom: 40px;
-}
-
 /* ID */
 #abstract {
     font-size: 20px;
@@ -102,4 +107,8 @@ pre {
     font-style: oblique;
     color: #777;
     line-height: 30px;
+}
+
+#abstract > a {
+    color: #9dbadf;
 }
