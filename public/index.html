@@ -29,6 +29,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="http://localhost:8080">Dropbox API Tutorial</a>
+<!--          <a class="navbar-brand" href="https://web.engr.oregonstate.edu/~chapplev">Dropbox API Tutorial</a>-->
       </div>
 
       <!--  MENU ITEMS -->
@@ -40,10 +41,12 @@
                 <li><a id="getting_started_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseGettingStarted">Getting Started</a></li>
                 <li><a id="auth_demo_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAuthDemo">Demo</a></li>
                 <li><a id="authentication_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAuth">Authentication</a></li>
+                <li><a id = "api_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAPI">Dropbox Methods</a></li>
+<!--
                 <li><a id = "choose_saver_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseChooserSaver">Chooser/Saver</a></li>
-              
+-->
+                
             </ul>
-
           </li>
             <li><a href="http://dropbox.github.io/dropbox-sdk-js/">Docs</a></li>
             <li><a href="https://nodejs.org/en/">Node.JS</a></li>
@@ -77,7 +80,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div id="pageContent" class="panel-group">
-                <div id="getting_started_spacer" class="navbarSpacer" style="display:none"></div>
+<!--                <div id="getting_started_spacer" class="navbarSpacer" style="display:none"></div>-->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="getting_started" class="panel-title">
@@ -141,11 +144,11 @@
 
                             <h4>Running Browserify</h4>
                             <p>
-                                Later, when we want to use our JavaScript file <strong>main.js</strong> in a web browser, we can use Browserify to combine <strong>main.js</strong> and its node dependencies into a single file called <strong>bundle.js</strong>. To do so, open the commandline in your app's folder, and run the following command.
+                                Later, when we want to use our JavaScript file <strong>main.js</strong> in a web browser, we can use Browserify to combine <strong>main.js</strong> and its node dependencies into a single file called <strong>bundle.js</strong>. To do so, open the command line in your app's folder, and run the following command.
                             </p>
                             <pre>browserify main.js -o bundle.js</pre> 
                             <p>
-                                Note, that the first file (<strong>main.js</strong>) must exist while the second file is created or overwritten.  Then, in your web page, you will link to the second file (<strong>bundle.js</strong>). Of course, like most commandline actions you can also specify location of the filenames, and the names can be different than <strong>main.js</strong> or <strong>bundle.js</strong>.
+                                Note, that the first file (<strong>main.js</strong>) must exist while the second file is created or overwritten.  Then, in your web page, you will link to the second file (<strong>bundle.js</strong>). Of course, like most command line actions you can also specify location of the filenames, and the names can be different than <strong>main.js</strong> or <strong>bundle.js</strong>.
                             </p>
                                 
                              <h3 id="using_start_script" class="jumptarget">Using a Start Script</h3>
@@ -158,7 +161,7 @@
                             </p>    
                             <pre>"scripts": {<br />    "start": "browserify main.js -o bundle.js"<br>}</pre>
                             <p>
-                                Once this script is saved in the package.json, you can run it in the commandline.
+                                Once this script is saved in the package.json, you can run it in the command line.
                             </p>
                             <pre>npm start</pre>
                             <p>
@@ -179,7 +182,7 @@
                             </p>
                             <pre>start": "watchify main.js -o bundle.js"</pre>
                             <p>
-                                When you use <code>npm start</code> from the commandline while in your app's folder, you will see watchify continually running, updating on each change of your <strong>main.js</strong> file. (To quit the process, press <kbd>ctrl+C</kbd>.)
+                                When you use <code>npm start</code> from the command line while in your app's folder, you will see watchify continually running, updating on each change of your <strong>main.js</strong> file. (To quit the process, press <kbd>ctrl+C</kbd>.)
                             </p>
 
                             <h3 id="register">Register Your App</h3>
@@ -200,7 +203,7 @@
                     </div>
                 </div>
                 
-                <div id="auth-demo_spacer" class="navbarSpacer" style="display:none"></div>
+<!--                <div id="auth-demo_spacer" class="navbarSpacer" style="display:none"></div>-->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="auth-demo" class="panel-title">
@@ -232,7 +235,7 @@
                 </div> 
                 
                 
-                <div id="authentication_spacer" class="navbarSpacer" style="display:none"></div>
+<!--                <div id="authentication_spacer" class="navbarSpacer" style="display:none"></div>-->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="authentication" class="panel-title">
@@ -250,15 +253,14 @@
                                 To display or try to access a user's Dropbox, we have to have a valid <strong>access token</strong>. To get an access token, the user must request us to have access to their Dropbox. In the case of the demo, the user clicks a button. On the button click, we use the Dropbox SDK to process the request for an access token. Once approved or denied, Dropbox redirects the user back to our page by using a return URI, which we set up as the location that we will handle the response from Dropbox.
                             </p>
                             <p>
-                                Once the user has accepted the request for access into their Dropbox, we can use the access token to create a Dropbox object in our JavaScript.  The Dropbox object can then make requests about files and user information.
+                                Once the user has accepted the request for access to their Dropbox, we can use the access token to create a Dropbox object in our JavaScript.  The Dropbox object can then make requests about files and user information.
                             </p>
                             <h3>Steps</h3>
                             <ol>
                                 <li>Set a redirect URI for our app on Dropbox and record the App key.</li>
                                 <li>Create an event listener to determine when and how to request authentication.</li>    
                                 <li>Create a function to check for authentication from the URL.</li>
-                                <li>Set up logic to handle html for case of authenticated and not authenticated.</li>
-                                <li>Access and Navigate the user's Dropbox</li>
+                                <li>Set up logic to handle HTML for the cases of authenticated and not authenticated.</li>
                             </ol>
                             
                             <h3>Step 1: Redirect URI and App Key</h3>
@@ -281,11 +283,11 @@
                                 </li>
                             </ol>
                             <p>
-                                <strong><em>Note</em></strong>: This tutorial will not show how to keep your key private, but you need to secure your app key so that only your sites have access. Some protection is given in the fact that you must register your redirect URIs with Dropbox.
+                                <strong><em>Note</em></strong>: This tutorial will not show how to keep your key private, but you need to secure your app key so that only your sites have access. Some protection is given in the fact that you must register your redirect URI with Dropbox.
                             </p>
                             <h3>Step 2: Request Authentication.</h3>
                             <p>
-                                Let's finally begin the fun stuff. We'll be working with our <strong>main.js</strong> file from the <a href="#getting_started">Getting Started</a> section. The <strong>main.js</strong> file is the file in which we will use Dropbox. It is also the file that is compiled into <strong>bundle.js</strong> with Broswerfiy. Recall that <strong>bundle.js</strong> is the file that you will include in your html file.
+                                Let's finally begin the fun stuff. We'll be working with our <strong>main.js</strong> file from the <a href="#getting_started">Getting Started</a> section. The <strong>main.js</strong> file is the file in which we will use Dropbox. It is also the file that is compiled into <strong>bundle.js</strong> with Broswerfiy. Recall that <strong>bundle.js</strong> is the file that you will include in your HTML file.
                             </p>
                             
                             <h4>Include Dropbox</h4>
@@ -327,21 +329,30 @@
                             <p>
                                 When a user accepts or denies your app access, Dropbox will send the user back to your website (via the redirect URI) and append a query string to this URL.  In this query string you will see various key/value pairs, possibly including a key called <strong>access_token</strong>.
                             </p>
-                            <h4>Create a Function to Parse URL</h4>
+                            <h4>
+                                Example URL
+                            </h4>
+                            <p>
+                                The return URL can have many key value pairs.
+                            </p>
+                            <pre>http://localhost:8080/#access_token=______________________H&amp;token_type=bearer&amp;uid=______&amp;account_id=_____________</pre>
+                            <h4>
+                                Function: Parse URL for Access Token
+                            </h4>
                             <p>
                                 Create a function called <code>getAccessTokenFromURL()</code>.  You will be able to call this function in your <strong>main.js</strong> file after a user has attempted to authenticate your app.
                             </p>
                             <p>
-                                Inside this function, get the query string from the hash of the window's URL.
+                                Next, add a line inside this function to save the query string, which is in the hash of the window's current URL.
                             </p>
                             <pre>1  function getAccessTokenFromURL(){
 2      var query = window.location.hash;
 3  };</pre>
                             <p>     
-                                You now need to parse the query string. There are many ways to parse the URL to get the access token. However, below is a simple method using regular expressions to find and return the access token.  Additionally, if there is no access token, but there is an error, then the string value of the error is returned.  If there is not query string, no access token, and no error, then the <code>null</code> is returned from the function.
+                                After saving the query string, we now need to parse it so that we can get the access_token. There are many ways to parse a URL; however, below is a simple method using regular expressions to find and return the access token.
                             </p>
-                            
-                            <div class="longCode"><h5>Scroll for All Code</h5><pre>1  function getAccessTokenFromUrl() {
+                            <h5>Scroll for All Code</h5>
+                            <div class="longCode"><pre>1  function getAccessTokenFromUrl() {
 2      var query = window.location.hash;
 3      var result = null;
 4      if (typeof query === 'string') {
@@ -373,21 +384,34 @@
 30      }
 31      return null;
 32  };</pre></div>
-                            <p>     
-                                <strong>Note</strong>: The query string can also be parsed into an object of the keys and a values, which can be returned by the fuction.
-                            </p>
+                            <blockquote>
+                                <p>
+                                    <strong>Lines 4-12</strong> The function tests that the query is actually of type string and then removes any whitespace, as well as the leading '#.' Also, if there is no query string, the function returns null.
+                                </p>
+                                <p>
+                                    <strong>Lines 17-26</strong> The string is separated by key-value pairs first, and then the keys are compared to <strong>access_token</strong> or <strong>error</strong>. If either are matched the value of the matched key is returned.
+                                </p>
+                                 <p>     
+                                    <strong>Alternatively</strong>: The query string could have been parsed into an object of the keys and a values, which could be returned by the function.
+                                </p>
+                            </blockquote>
+                           
                             <h3>Step 4: Conditional HTML</h3>
                             <p>
-                                token is a global variable, but can be stored elsewhere for persistence.  We store it temporarily so that the user can jump from section to section on this page without losing their authentication.
-                                
+                                Whether the user is using your app for the first time or has returned from the Dropbox authentication website, you will want to display information based on if the access token is valid or not.  Below are some example functions to help us adjust our HTML.
                             </p>
-                            
-                            <pre>1  function isAuth(){        
-2       <span class="comment">// See if access token has a value, else get from URL</span>
-3       if (token === null) {
-4            token = getAccessTokenFromUrl();
-5       }
-6
+                            <h4>
+                                Function: Test If Authenticated
+                            </h4>
+                            <p>
+                                We will create a test function called <code>isAuth()</code> to return true for authenticated users and false if the access token is invalid or nonexistent.
+                            </p>                           
+                            <pre>1  var token = null;
+2  function isAuth(){        
+3       <span class="comment">// See if access token has a value, else get from URL</span>
+4       if (token === null) {
+5            token = getAccessTokenFromUrl();
+6       }
 7       if ((token === null) || (token === 'access_denied')) {
 8            return false;
 9       }
@@ -395,21 +419,89 @@
 11           return true;
 12      }
 13  };</pre>
+                            <blockquote>
+                                <p>
+                                    <strong>Line 1</strong> For this tutorial, the access token is simply saved to a global variable, called <code>token</code>, and the token will not persist beyond a page refresh.  For you to avoid this, you could set up to store the access token in a session or on a server.
+                                </p>
+                                <p>
+                                    <strong>Line 5</strong> If the token is not valid, the <code>getAccessTokenFromUrl()</code> is called, which will return the access token from the URL or return null.
+                                </p>
+                            </blockquote> 
+                            
                             <h4>
-                                Determine what you want authenticated and non-auth to view
+                                Example Display
                             </h4>
-                            <h4>
-                                
-                            </h4>
-                            <h3>Step 5: Accessing a User's Dropbox</h3>
-                            <h3>Review</h3>
+                            <p>
+                                The demo on for this tutorial shows two different div blocks based on if the user is authenticated.  To do this, the <code>isAuth()</code> function is called and used as the conditional in an <code>if</code> statement.
+                            </p>
+                            <pre>1  if (isAuth()) {
+2       <span class="comment">// authorized...</span>
+3       document.getElementById("no_auth_div").style.display = 'none';
+4       document.getElementById("authed_div").style.display = 'block';
+5       <span class="comment">// ...do stuff with Dropbox...</span>
+6  }
+7  else {
+8       <span class="comment">// Not authorized, show get files button</span>
+9       document.getElementById("no_auth_div").style.display = 'block';
+10      document.getElementById("authed_div").style.display = 'none';
+11 }</pre>
+                            <p>
+                                In the next section, we will add some code to line 5 in order to access the user's Dropbox.
+                            </p>
                         </div>
                     </div>
                 </div> 
                 
                 
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 id="api" class="panel-title">
+                            <a data-toggle="collapse" data-parent="#pageContent" href="#collapseAPI" aria-expanded="false">Dropbox Methods</a>
+                        </h2>
+                    </div>
+                    
+                    <div id="collapseAPI" class="panel-collapse collapse"  aria-expanded="false">
+                        <div class="panel-body">
+                            <p>
+                                Once a user is authenticated, you can create an instance of the Dropbox class and access a variety of information using an the methods of that instance.  To see the full method documentation, visit <a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html">dropbox-sdk-js</a> on github.
+                            </p>
+                            
+                            <h3>
+                                Dropbox Class
+                            </h3>
+                            <p>
+                                To access a user's Dropbox, you will need to create a new instance of the Dropbox class, using the <code>new</code> operator and passing in the access <code>token</code>.
+                            </p>
+                            <pre>var myDropbox = new Dropbox({ accessToken: token});</pre>
+                            <h3>
+                                Method: filesListFolder()
+                            </h3>
+                            <p>
+                                Once the new instance of Dropbox is created, you can access the files using the <code>.filesListFOlder()</code> method.
+                            </p>
+                            <pre>1  var myDropbox = new Dropbox({ accessToken: token});
+2       myDropbox.filesListFolder({path: ''}).then(function(response) {
+            // returns: http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderResult
+            displayFiles(response.entries);
+            // enterieshttp://dropbox.github.io/dropbox-sdk-js/global.html#FilesFileMetadata
+            location.hash = "#auth-demo";
+            scrollToHash;
+        }, function(error) {
+            console.error(error);
+        })</pre>
+                             <blockquote>
+                                 <p>
+                                     See <a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#filesListFolder__anchor">documentation</a> for more information.
+                                 </p>
+                            </blockquote>
+                            
+                         </div>
+                    </div>
+                </div>
                 
-                <div id="chooser_saver_spacer" class="navbarSpacer" style="display:none"></div>
+                
+                
+<!--
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="chooser_saver" class="panel-title">
@@ -426,6 +518,7 @@
                          </div>
                     </div>
                 </div>
+-->
             </div>
         </div>
     </div>

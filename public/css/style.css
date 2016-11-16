@@ -3,15 +3,16 @@ body {
     padding-top: 70px;
 }
 
-.navbarSpacer {
-    display: none;
-    content: " ";
-    height: 70px;
-}
-
 /* TAGS */
 h1 {
-    font-size: 50px;
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: 30px;
+    text-align: justify;
+}
+
+h2 {
+    font-size: 20px;
     font-weight: 600;
     margin-top: 30px;
     text-align: justify;
@@ -66,6 +67,10 @@ div .longCode {
 }
 
 /* PANELS */
+.panel {
+    border-color: #515151;
+    border-bottom-width: thick;
+}
 .panel .panel-body a {
     font-weight: 700;
     font-family: monospace;
@@ -73,14 +78,19 @@ div .longCode {
 }
 
 .panel-heading h2 a, .panel-heading h2 a:hover {
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 25px;
+    font-weight: 700;
     text-align: justify;
     text-decoration: none;
+    font-family: sans-serif;
 }
 
 .panel-heading h2 a:hover {
-    color: #9dbadf;
+    color: #FFF;
+}
+
+.panel .panel-heading {
+    background-color: #9dbadf;
 }
 
 /* CLASSES */

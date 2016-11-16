@@ -4333,17 +4333,16 @@ var key = new Key();
 
 var token = null;
 var baseUrl = "http://localhost:8080/";
+//var baseUrl = "https://web.engr.oregonstate.edu/~chapplev";
 
 document.addEventListener('DOMContentLoaded', setUpBootstrapListeners);
 document.addEventListener('DOMContentLoaded', bindAuth);
 window.addEventListener('load', scrollToHash);
 
-window.addEventListener('hashchange', handleHashChange);
-
-function handleHashChange(e) {
-    e.preventDefault();
-    scrollToHash();
-}
+window.addEventListener('hashchange', function() {
+    
+    scrollBy(0, -70)
+});
 function scrollToHash() {
     if (window.location.hash !== null) {
 
@@ -4368,12 +4367,18 @@ function scrollToHash() {
             });
             location.hash = hash;
         }
-        else if (hash === "#chooser_saver") {
-            $('#collapseChooserSaver').collapse({
+        else if (hash === "#api") {
+            $('#collapseAPI').collapse({
                 toggle: true
             });
             location.hash = hash;
         }
+//        else if (hash === "#chooser_saver") {
+//            $('#collapseChooserSaver').collapse({
+//                toggle: true
+//            });
+//            location.hash = hash;
+//        }
 
     }
 }
@@ -4383,47 +4388,51 @@ function setUpBootstrapListeners() {
     $('#collapseGettingStarted').on('shown.bs.collapse', function () {
         window.location.hash = "getting_started";
         scrollToHash();
-        document.getElementById('getting_started_spacer').style.display = "block";
     });
     $('#collapseGettingStarted').on('hidden.bs.collapse', function () {
         window.location.hash = "";
         scrollToHash();
-        document.getElementById('getting_started_spacer').style.display = "none";
     });
 
     $('#collapseAuthDemo').on('shown.bs.collapse', function () {
         window.location.hash = "auth-demo";
         scrollToHash();
-        document.getElementById('auth-demo_spacer').style.display = "block";
     });
 
     $('#collapseAuthDemo').on('hidden.bs.collapse', function () {
         window.location.hash = "";
         scrollToHash();
-        document.getElementById('auth-demo_spacer').style.display = "none";
     });
 
 
     $('#collapseAuth').on('shown.bs.collapse', function () {
         window.location.hash = "authentication";
         scrollToHash();
-        document.getElementById('authentication_spacer').style.display = "block";
     });
 
     $('#collapseAuth').on('hidden.bs.collapse', function () {
         window.location.hash = "";
         scrollToHash();
-        document.getElementById('authentication_spacer').style.display = "none";
     });
 
-    $('#collapseChooserSaver').on('shown.bs.collapse', function () {
-        window.location.hash = "chooser_saver";
-        document.getElementById('chooser_saver_spacer').style.display = "block";
+    $('#collapseAPI').on('shown.bs.collapse', function () {
+        window.location.hash = "api";
+        scrollToHash();
     });
 
-    $('#collapseChooserSaver').on('hidden.bs.collapse', function () {
-        window.location.hash = ""; document.getElementById('chooser_saver_spacer').style.display = "none";
+    $('#collapseAPI').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+        scrollToHash();
     });
+    
+//    $('#collapseChooserSaver').on('shown.bs.collapse', function () {
+//        window.location.hash = "chooser_saver";
+//    });
+//
+//    $('#collapseChooserSaver').on('hidden.bs.collapse', function () {
+//        window.location.hash = "";
+//        scrollToHash();
+//    });
 }
 
 function bindAuth() {
