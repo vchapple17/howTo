@@ -4336,13 +4336,17 @@ var baseUrl = "http://localhost:8080/";
 //var baseUrl = "https://web.engr.oregonstate.edu/~chapplev";
 
 document.addEventListener('DOMContentLoaded', setUpBootstrapListeners);
+document.addEventListener('DOMContentLoaded', updateHomeURL);
 document.addEventListener('DOMContentLoaded', bindAuth);
 window.addEventListener('load', scrollToHash);
 
 window.addEventListener('hashchange', function() {
-    
     scrollBy(0, -70)
 });
+
+function updateHomeURL() {
+    document.getElementById('home_link').href = baseUrl;
+}
 function scrollToHash() {
     if (window.location.hash !== null) {
 
@@ -4532,17 +4536,17 @@ function bindAuth() {
         ol.id = "fileList";
         filesDiv.appendChild(ol);
 
-        for (var i = 0; i < 10; i++) {
-            var li = document.createElement('li');
-            li.innerHTML = files[i].name;
-            ol.appendChild(li);
-        };
-
-//        files.forEach(function(file) {
+//        for (var i = 0; i < 10; i++) {
 //            var li = document.createElement('li');
-//            li.innerHTML = file.name;
+//            li.innerHTML = files[i].name;
 //            ol.appendChild(li);
-//        });
+//        };
+
+        files.forEach(function(file) {
+            var li = document.createElement('li');
+            li.innerHTML = file.name;
+            ol.appendChild(li);
+        });
     };
 
 }

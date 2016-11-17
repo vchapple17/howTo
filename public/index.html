@@ -28,7 +28,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="http://localhost:8080">Dropbox API Tutorial</a>
+        <a id="home_link" class="navbar-brand" href="http://localhost:8080">Dropbox API Tutorial</a>
 <!--          <a class="navbar-brand" href="https://web.engr.oregonstate.edu/~chapplev">Dropbox API Tutorial</a>-->
       </div>
 
@@ -463,7 +463,7 @@
                     <div id="collapseAPI" class="panel-collapse collapse"  aria-expanded="false">
                         <div class="panel-body">
                             <p>
-                                Once a user is authenticated, you can create an instance of the Dropbox class and access a variety of information using an the methods of that instance.  To see the full method documentation, visit <a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html">dropbox-sdk-js</a> on github.
+                                Once a user is authenticated, you can create an instance of the Dropbox class and access a variety of information using the methods of that instance.
                             </p>
                             
                             <h3>
@@ -473,19 +473,77 @@
                                 To access a user's Dropbox, you will need to create a new instance of the Dropbox class, using the <code>new</code> operator and passing in the access <code>token</code>.
                             </p>
                             <pre>var myDropbox = new Dropbox({ accessToken: token});</pre>
+                            <p>
+                                You can then call various methods on <code>myDropbox</code> to explore the user's Dropbox.
+                            </p>
+                            <ul>
+                                <li>fileListFolder()</li>
+                                <li>()</li>
+                                <li>()</li>
+                            </ul>
+                            <p>
+                                While the methods are listed in <a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html">documentation</a> for the Dropbox class, this tutorial explains some basic concepts involving each method's arguments.
+                            </p>
                             <h3>
                                 Method: filesListFolder()
                             </h3>
                             <p>
-                                Once the new instance of Dropbox is created, you can access the files using the <code>.filesListFOlder()</code> method.
+                                You can access the files of a user by calling the <code>.filesListFOlder()</code> method on <code>myDropbox</code>.
+                            </p>
+                            <pre>myDropbox.filesListFolder({path: ''})</pre>
+                            <p>
+                                The above line of code will return an object that is a list of all the files in the root directory of the user's Dropbox.  Other folders can be reached by changing the path property to another string.
+                            </p>
+                            <h4>Parameter:</h4>
+                            <p>
+                                Notice that the parameter is actually an object.  This object is called a <a href="http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderArg">FilesListFolderArg</a>.  You can add additional information to the FilesListFolderArg by setting any of the following boolean properties to true:
+                            </p>
+                            <ul>
+                                <li>recursive</li>
+                                <li>include_media_info</li>
+                                <li>include_deleted</li>
+                                <li>include_has_explicit_shared_members</li>
+                            </ul>
+
+                            <h4>Return:</h4>
+                            <p>
+                                Technically calling <code>.filesListFolder()</code> does not directly return an object of files. Instead, it returns a <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a> object.</p>
+                            <p>
+                                For those new to Promises, you can think of it as an object to help asynchronous actions handle success and failure of events.  A promise is helpful because you can pass success and failure functions to this promise before you have a result returned from the asynchronous call.
+                            </p>
+                            <p>
+                                After we make the call with <code>.filesListFolder()</code>, we can append a <code>.then()</code> call on the returned Promise.  The <code>.then()</code> call can include a function to use when the promise resolves (i.e. is successful) and or another function to use when the promise is rejected or has an error.</p>
+                            <p>
+                                Each of the functions passed into the <code>.then</code> call has one argument: a fullfillment value if the promise resolves and a reject value if the promise is rejected.  See the Dropbox example below.
+                            </p>
+                            <pre>1  myDropbox.filesListFolder({path: ''})
+2       .then( function(response) {
+3           <span class="comment">// Name of first file</span>
+4           response.entries[0].name;
+5       }, function(error) {
+6           <span class="comment">// Do something with error object</span>
+7           console.error(error); 
+8  })</pre>
+                            <blockquote>
+                                <p>
+                                    <strong>Line 2</strong> calls the <code>.then</code> function.
+                                </p>
+                                <p>
+                                    <strong>Line 2 to 4</strong> contains the function used on the success
+                                </p>
+                                <p>
+                                    the fullfillment value is response, but can be named anything you wish
+                                    the rejected value is called error, but can be named anything
+                                    A promise can return whatever object it deems; however, dropbox has defined these returns as a FilesListFolderResult for fullfillment, and a Error for rejected
+                                </p>
+                            </blockquote>
+                            <p>
+                                As stated earlier, this function returns an object that contains the list of the file and folder names inside the requested folder.  The name of this object is <a href="http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderResult">FilesListFolderResult</a>.  To access the files of this return object, call the <code>entries</code> property using dot notation.
                             </p>
                             <pre>1  var myDropbox = new Dropbox({ accessToken: token});
 2       myDropbox.filesListFolder({path: ''}).then(function(response) {
-            // returns: http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderResult
             displayFiles(response.entries);
             // enterieshttp://dropbox.github.io/dropbox-sdk-js/global.html#FilesFileMetadata
-            location.hash = "#auth-demo";
-            scrollToHash;
         }, function(error) {
             console.error(error);
         })</pre>
@@ -498,8 +556,6 @@
                          </div>
                     </div>
                 </div>
-                
-                
                 
 <!--
                 <div class="panel panel-default">
