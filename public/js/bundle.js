@@ -4460,7 +4460,7 @@ function bindAuth() {
 
         // Get files from dropbox
         var myDropbox = new Dropbox({ accessToken: token});
-
+        
         myDropbox.filesListFolder({path: ''}).then(function(response) {
             // returns: http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderResult
             displayFiles(response.entries);
@@ -4536,17 +4536,17 @@ function bindAuth() {
         ol.id = "fileList";
         filesDiv.appendChild(ol);
 
-//        for (var i = 0; i < 10; i++) {
-//            var li = document.createElement('li');
-//            li.innerHTML = files[i].name;
-//            ol.appendChild(li);
-//        };
-
-        files.forEach(function(file) {
+        for (var i = 0; i < 10; i++) {
             var li = document.createElement('li');
-            li.innerHTML = file.name;
+            li.innerHTML = files[i].name;
             ol.appendChild(li);
-        });
+        };
+
+//        files.forEach(function(file) {
+//            var li = document.createElement('li');
+//            li.innerHTML = file.name;
+//            ol.appendChild(li);
+//        });
     };
 
 }
