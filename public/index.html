@@ -42,6 +42,7 @@
                 <li><a id="auth_demo_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAuthDemo">Demo</a></li>
                 <li><a id="authentication_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAuth">Authentication</a></li>
                 <li><a id = "api_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseAPI">Dropbox Methods</a></li>
+                <li><a id = "conclusion_link" data-toggle="collapse" data-parent="#pageContent" href="#collapseConclusion">Conclusion</a></li>
             </ul>
           </li>
             <li><a href="http://dropbox.github.io/dropbox-sdk-js/">Docs</a></li>
@@ -76,7 +77,6 @@
     <div class="row">
         <div class="col-xs-12">
             <div id="pageContent" class="panel-group">
-<!--                <div id="getting_started_spacer" class="navbarSpacer" style="display:none"></div>-->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="getting_started" class="panel-title">
@@ -229,16 +229,14 @@
                                     <button class="btn" id="createFolderBtn">Create Folder</button>
                                     <button class="btn" id="revokeBtn">Revoke Token</button>
                                 </div>
-                                <p><em>Results:</em> Here is a list of your file/folder names:</p>
-                                <div id="files">
+                                <p><em>Results:</em> Here is a list of some of your file/folder names:</p>
+                                <div id="files" class="filesList">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div> 
                 
-                
-<!--                <div id="authentication_spacer" class="navbarSpacer" style="display:none"></div>-->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 id="authentication" class="panel-title">
@@ -435,7 +433,7 @@
                                 Example Display
                             </h4>
                             <p>
-                                The demo on for this tutorial shows two different div blocks based on if the user is authenticated.  To do this, the <code>isAuth()</code> function is called and used as the conditional in an <code>if</code> statement.
+                                The demo for this tutorial shows two different div blocks based on if the user is authenticated.  To do this, the <code>isAuth()</code> function is called and used as the conditional in an <code>if</code> statement.
                             </p>
                             <pre>1  if (isAuth()) {
 2       <span class="comment">// authorized...</span>
@@ -477,17 +475,19 @@
                             </p>
                             <pre>var myDropbox = new Dropbox({ accessToken: token});</pre>
                             <p>
-                                You can then call various methods on <code>myDropbox</code> to explore the user's Dropbox.
+                                You can then call various methods on <code>myDropbox</code> to explore the user's Dropbox. Here are three of these methods.
                             </p>
+                            <strong>
                             <ul>
-                                <li>fileListFolder()</li>
-                                <li>filesCreateFolder()</li>
-                                <li>authTokenRevoke()</li>
+                                <li><a href="#filesListFolder">fileListFolder()</a></li>
+                                <li><a href="#filesCreateFolder">filesCreateFolder()</a></li>
+                                <li><a href="#authTokenRevoke">authTokenRevoke()</a></li>
                             </ul>
+                            </strong>
                             <p>
                                 While the methods are listed in <a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html">documentation</a> for the Dropbox class, this tutorial explains some basic concepts involving each method's arguments.
                             </p>
-                            <h3>
+                            <h3 id="filesListFolder">
                                 Method: filesListFolder()
                             </h3>
                             <p>
@@ -550,7 +550,7 @@
                             </ul>
                             
                             <p>
-                                You can access these individual file and folder objects in the entries array using indeces or calling the <code>.forEach()</code> function.
+                                You can access these individual file and folder objects in the entries array using indices or calling the <code>.forEach()</code> function.
                                 An example of using an index to access the name property of the first entry is shown below.
                             </p>
                             <pre>1  myDropbox.filesListFolder({path: ''})
@@ -586,7 +586,7 @@
                                  </p>
                             </blockquote>
                             
-                            <h3>
+                            <h3 id="filesCreateFolder">
                                 Method: filesCreateFolder()
                             </h3>
                             <p>
@@ -599,9 +599,8 @@
                             </p>
                             <h4>Parameter: <small>FilesListFolderArg</small></h4>
                             <p>
-                                The FilesCreateFolderArg object contains two properties. The first is a 'path' property. This property is a string, which designates the path at which the folder is to be created.  The second is a boolean called 'autorename' which determines if a file needs to be renamed in case of a conflict.
+                                The FilesCreateFolderArg object contains two properties. The first is a 'path' property. This property is a string, which designates the path at which the folder is to be created, including the folder name.  The second is a boolean called 'autorename' which determines if a file needs to be renamed in case of a conflict.  The demonstration has this value set to false so that a new folder is not created on every button click.
                             </p>
-                            
 
                             <h4>Return: <small>Promise&lt;folder, error&gt;</small></h4>
                             <p>
@@ -612,7 +611,7 @@
                             <p>
                                 This code will create a folder at the root directory and name this folder "newfoldername" and store the reference to that folder in the variable newFolder. If the folder "newfoldername" already exists, Dropbox will attempt to rename the folder to one that does not have a conflict.
                             </p>
-                            <h3>
+                            <h3 id="authTokenRevoke">
                                 Method: authTokenRevoke()
                             </h3>
                             <p>
@@ -651,7 +650,40 @@
                          </div>
                     </div>
                 </div>
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 id="conclusion" class="panel-title">
+                            <a data-toggle="collapse" data-parent="#pageContent" href="#collapseConclusion" aria-expanded="false">Conclusion</a>
+                        </h2>
+                    </div>
+                
+                    <div id="collapseConclusion" class="panel-collapse collapse" aria-expanded="false">
+                        <div class="panel-body">
+                            <p>
+                                You can use many languages to interact with Dropbox. Thankfully Dropbox does a decent job of keeping the structure of its API consistent throughout the languages.  Hopefully after exploring Dropbox with JavaScript you will be more comfortable debugging other languages and even other APIs 
+                            </p>
+
+                            <h3>Key Concepts</h3>
+                            <ul>
+                                <li>OAuth 2.0 is Dropbox's authentication method. You will need to have the user approve your app's access after you register with Dropbox's developers site.</li>
+                                <li>You will need to store you app key and the user's access token for privacy and persistence.</li>
+                                <li>Instances of Dropbox come with many methods. These functions take objects as arguments, which can be found in Dropbox's documentation.</li>
+                            </ul>
+                            <h3>Things Left Out</h3>
+                            <ul>
+                                <li>Dropbox offers <a href="https://www.dropbox.com/developers/chooser">Chooser</a> and <a href="https://www.dropbox.com/developers/saver">Saver</a> programs that do not require authentication</li>
+                                <li>Look into the <a href="https://www.dropbox.com/developers/reference/developer-guide">developer's</a> guide for producing an app with Dropbox.</li>
+                                <li>Utilize the <a href="https://dropbox.github.io/dropbox-api-v2-explorer/">API Explorer</a> from Dropbox.</li>
+                                <li>Lastly, explore the <a href="https://www.dropbox.com/developers/reference/webhooks">Webhooks</a> offered by Dropbox, which will notify you of changes to user files.</li>
+                            </ul>
+                            <h3>Happy Coding!</h3>
+                        </div>
+                    </div>
+                </div> 
+                
             </div>
+            <div class="row spacer"> </div>
         </div>
     </div>
     

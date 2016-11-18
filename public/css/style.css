@@ -57,9 +57,22 @@ code, pre {
 pre {
     margin: 20px 0px 20px 0px;
 }
+
 pre > .comment {
     color: white;
 }
+
+#fileList {
+    background: #DDD;
+    border-color: #515151;
+    border-bottom-width: thick; 
+}
+
+.filesList {
+    overflow: auto;
+    height: 315px;
+}
+
 
 div .longCode {
     overflow: auto;
@@ -107,6 +120,12 @@ div .longCode {
 
 .startHidden {
     display: none;
+}
+
+.spacer {
+    height: 200px;
+    display: block;
+    content: ' ';
 }
 
 /* ID */

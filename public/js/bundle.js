@@ -4332,49 +4332,65 @@ var Key = require('./priv.js');
 var key = new Key();
 
 var token = null;
-var baseUrl = "http://localhost:8080/";
-//var baseUrl = "https://web.engr.oregonstate.edu/~chapplev";
+//var baseUrl = "http://localhost:8080/";
+var baseUrl = "https://web.engr.oregonstate.edu/~chapplev";
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('home_link').href = baseUrl;
 });
+document.addEventListener('DOMContentLoaded',scrollToHash);
+
 document.addEventListener('DOMContentLoaded', setUpBootstrapListeners);
 document.addEventListener('DOMContentLoaded', bindAuth);
 window.addEventListener('load', scrollToHash);
 window.addEventListener('hashchange', function() {
+    scrollToHash();
+    var hash = location.hash;
+    hash.replace(/^#/)
+    console.log(hash);
     scrollBy(0, -70)
 });
 
 function scrollToHash() {
     if (window.location.hash !== null) {
-
         var hash = window.location.hash;
 
         if (hash === "#getting_started") {
             $('#collapseGettingStarted').collapse({
                 toggle: true
             });
-            location.hash = hash;
-
-        }
+            document.getElementById("getting_started").scrollIntoView();
+            scrollBy(0, -70)
+        }        
         else if (hash === "#auth-demo") {
             $('#collapseAuthDemo').collapse({
                 toggle: true
             });
-            location.hash = hash;
+            document.getElementById("auth-demo").scrollIntoView()
+            scrollBy(0, -70)
         }
         else if (hash === "#authentication") {
             $('#collapseAuth').collapse({
                 toggle: true
             });
-            location.hash = hash;
+            document.getElementById("authentication").scrollIntoView()
+            scrollBy(0, -70)
         }
         else if (hash === "#api") {
             $('#collapseAPI').collapse({
                 toggle: true
             });
-            location.hash = hash;
+            document.getElementById("api").scrollIntoView()
+            scrollBy(0, -70)
         }
+        else if (hash === "#conclusion") {
+            $('#collapseConclusion').collapse({
+                toggle:true
+            });
+            document.getElementById("conclusion").scrollIntoView();
+            scrollBy(0, -70)
+        }
+        
     }
 }
 
@@ -4419,6 +4435,16 @@ function setUpBootstrapListeners() {
         window.location.hash = "";
         scrollToHash();
     });
+    
+    $('#collapseConclusion').on('shown.bs.collapse', function () {
+        window.location.hash = "conclusion";
+        scrollToHash();
+    });
+
+    $('#collapseConclusion').on('hidden.bs.collapse', function () {
+        window.location.hash = "";
+        scrollToHash();
+    });
 }
 
 function bindAuth() {
@@ -4438,7 +4464,7 @@ function bindAuth() {
         createFolderBtn.addEventListener('click', function() {
             var myDropbox = new Dropbox({accessToken: token});
             var foldername = "How To Tutorial Folder";
-            myDropbox.filesCreateFolder({path: '/'+foldername, autorename: true}).then( function(response) {
+            myDropbox.filesCreateFolder({path: '/'+foldername, autorename: false}).then( function(response) {
                 console.log("created folder");
                 console.log(response.name);
                 myDropbox.filesListFolder({path: ''}).then(function(response) {
@@ -4446,10 +4472,27 @@ function bindAuth() {
                         displayFolderSuccess(foldername);
                     }, function(error) {
                         console.error(error);
-                        displayFolderError(foldername);
-                })
+                });
             }, function(error) {
                 console.error(error);
+                console.log("ERORR");
+                var errorObj = JSON.parse(error.error);
+                if (errorObj.error['.tag'] === 'path') {
+                    var path = errorObj.error['path'];
+                    if (path[".tag"] === 'conflict') {
+                        displayFolderError(foldername, "Naming conflict with existing folder.");
+                    }
+                    else {
+                        console.log("other error");
+                        displayFolderError(foldername, errorObj.error_summary);
+                    }
+                    myDropbox.filesListFolder({path: ''}).then(function(response) {
+                        displayFiles(response.entries);
+                    }, function(error) {
+                        console.error(error);
+                });
+                    
+                }
             }
             );
         });
@@ -4475,12 +4518,13 @@ function bindAuth() {
         var myDropbox = new Dropbox({ accessToken: token});
         
         myDropbox.filesListFolder({path: ''}).then(function(response) {
-            displayFiles(response.entries, 10);
+            displayFiles(response.entries, 200);
             location.hash = "#auth-demo";
             scrollToHash();
         }, function(error) {
             console.error(error);
-        })
+        });
+        
     }
     else {
         // Not authorized, show button div
@@ -4539,17 +4583,24 @@ function bindAuth() {
         return null;
     };
 
-    function displayFolderError(foldername) {
+    function displayFolderError(foldername, extraInfoStr) {
         var errorDiv = document.getElementById('Error');
+        errorDiv.textContent = '';
         var h4 = document.createElement('h4');
         
         h4.textContent = "Error creating folder: " + foldername;
         errorDiv.appendChild(h4);
+        var h5 = document.createElement('h5');
+        h5.textContent = "Error: " + extraInfoStr;
+        errorDiv.appendChild(h5);
         errorDiv.style.display = 'block';
     }
     function displayFolderSuccess(foldername) {
         console.log("folder success");
+        document.getElementById('Error').style.display = 'none';
+        
         var successDiv = document.getElementById('folderCreated');
+        successDiv.textContent = '';
         var h4 = document.createElement('h4');
         h4.textContent = "Look for the \"" + foldername + "\" created.";
         successDiv.appendChild(h4);
@@ -4566,9 +4617,9 @@ function bindAuth() {
 
         if (max === undefined) {        
             files.forEach(function(file) {
-            var li = document.createElement('li');
-            li.innerHTML = file.name;
-            ol.appendChild(li);
+                var li = document.createElement('li');
+                li.innerHTML = file.name;
+                ol.appendChild(li);
             });
         }
         else {
@@ -4578,7 +4629,7 @@ function bindAuth() {
                 ol.appendChild(li);
             };
         }
-
+    
     };
 
 }
