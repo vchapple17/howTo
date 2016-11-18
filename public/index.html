@@ -207,6 +207,7 @@
                 
                     <div id="collapseAuthDemo" class="panel-collapse collapse" aria-expanded="false">
                         <div class="panel-body">
+                            <h3>Works in Google Chrome</h3>
                             <p>
                                 Dropbox authenticates users using OAuth 2 flow. That is, you must ask for access to files from your users. Once approved, an access token is returned, which allows you to access the user's Dropbox.
                             </p>
@@ -219,7 +220,7 @@
                                 </div>
                             </div>
                             <div id="authed_div" class="startHidden">
-                                <p>You authenticated your Dropbox successfully. The access token can be stored in a cookie or on the server. However, for this website, if you refresh, you will have to re-authenticate to run this demo.</p>
+                                <p>You authenticated your Dropbox successfully. The access token can be stored in a cookie or on the server. However, for this website, the token is stored in a sessionsStorage. If you close the browser to revoke the access token, you will have to re-authenticate to run this demo.</p>
                                 
                                 <div class="center startHidden" id="Error">
                                 </div>
@@ -422,7 +423,7 @@
 13  };</pre>
                             <blockquote>
                                 <p>
-                                    <strong>Line 1</strong> For this tutorial, the access token is simply saved to a global variable, called <code>token</code>, and the token will not persist beyond a page refresh.  For you to avoid this, you could set up to store the access token in a session or on a server.
+                                    <strong>Line 1</strong> For this example, the access token is simply saved to a global variable, called <code>token</code>, and the token will not persist beyond a page refresh.  For you to avoid this, you could set up to store the access token in a session or on a server.
                                 </p>
                                 <p>
                                     <strong>Line 5</strong> If the token is not valid, the <code>getAccessTokenFromUrl()</code> is called, which will return the access token from the URL or return null.

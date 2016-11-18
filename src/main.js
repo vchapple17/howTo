@@ -2,7 +2,6 @@ var Dropbox = require('dropbox');
 var Key = require('./priv.js');
 var key = new Key();
 
-var token = null;
 //var baseUrl = "http://localhost:8080/";
 var baseUrl = "https://web.engr.oregonstate.edu/~chapplev";
 
@@ -21,6 +20,57 @@ window.addEventListener('hashchange', function() {
     console.log(hash);
     scrollBy(0, -70)
 });
+
+
+////http://stackoverflow.com/questions/32101057/how-to-save-a-variable-in-safari-private-mode
+//localStoreSupport: function ()
+//{
+//    var testKey = 'test', storage = window.sessionStorage;
+//    try
+//    {
+//        storage.setItem(testKey, '1');
+//        storage.removeItem(testKey);
+//        return true;
+//    }
+//    catch (error)
+//    {
+//        return false;
+//    }
+//}
+//
+//function saveAccessToken(value) {
+//    if (this.localStoreSupport()) {
+//        localStorage.setItem('token', value);
+//    }
+//    else {
+//        document.cookie = token + "=" + encodeURIComponent(value) + expires + "; path=/";
+//    }
+//}
+//
+//function getAccessToken() {
+//    if (this.localStoreSupport()) {
+//        return localStorage.getItem('token');
+//    }
+//    else {
+//        //w3schools.com/js/js_coookie.asp
+//        var name = "token=";
+//        var ca = document.cookie.split(';');
+//        for(var i = 0; i <ca.length; i++) {
+//            var c = ca[i];
+//            while (c.charAt(0)==' ') {
+//                c = c.substring(1);
+//            }
+//            if (c.indexOf(name) == 0) {
+//                return c.substring(name.length,c.length);
+//            }
+//        }
+//        return "";
+//    }
+//}
+//        
+//        document.cookie = token + "=" + encodeURIComponent(value) + expires + "; path=/";
+//    }
+//}
 
 function scrollToHash() {
     if (window.location.hash !== null) {
@@ -72,7 +122,7 @@ function setUpBootstrapListeners() {
         scrollToHash();
     });
     $('#collapseGettingStarted').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
+//        window.location.hash = "";
         scrollToHash();
     });
 
@@ -82,7 +132,7 @@ function setUpBootstrapListeners() {
     });
 
     $('#collapseAuthDemo').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
+//        window.location.hash = "";
         scrollToHash();
     });
 
@@ -93,7 +143,7 @@ function setUpBootstrapListeners() {
     });
 
     $('#collapseAuth').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
+//        window.location.hash = "";
         scrollToHash();
     });
 
@@ -103,7 +153,7 @@ function setUpBootstrapListeners() {
     });
 
     $('#collapseAPI').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
+//        window.location.hash = "";
         scrollToHash();
     });
     
@@ -113,7 +163,7 @@ function setUpBootstrapListeners() {
     });
 
     $('#collapseConclusion').on('hidden.bs.collapse', function () {
-        window.location.hash = "";
+//        window.location.hash = "";
         scrollToHash();
     });
 }
@@ -133,7 +183,7 @@ function bindAuth() {
     var createFolderBtn = document.getElementById('createFolderBtn');
     if (createFolderBtn !== null) {
         createFolderBtn.addEventListener('click', function() {
-            var myDropbox = new Dropbox({accessToken: token});
+            var myDropbox = new Dropbox({accessToken: sessionStorage.getItem('token')});
             var foldername = "How To Tutorial Folder";
             myDropbox.filesCreateFolder({path: '/'+foldername, autorename: false}).then( function(response) {
                 console.log("created folder");
@@ -172,9 +222,10 @@ function bindAuth() {
     var revokeBtn = document.getElementById('revokeBtn');
     if (revokeBtn !== null) {
         revokeBtn.addEventListener('click', function() {
-            var myDropbox = new Dropbox({ accessToken: token});
+            var myDropbox = new Dropbox({ accessToken: sessionStorage.getItem('token')});
             myDropbox.authTokenRevoke();
-            token = null;
+//            token = null;
+            sessionStorage.clear();
             location = baseUrl;
         });
     }
@@ -186,12 +237,12 @@ function bindAuth() {
         document.getElementById("authed_div").style.display = 'block';
 
         // Get files from dropbox
-        var myDropbox = new Dropbox({ accessToken: token});
+        var myDropbox = new Dropbox({ accessToken: sessionStorage.getItem('token')});
         
         myDropbox.filesListFolder({path: ''}).then(function(response) {
             displayFiles(response.entries, 200);
-            location.hash = "#auth-demo";
-            scrollToHash();
+//            location.hash = "#auth-demo";
+//            scrollToHash();
         }, function(error) {
             console.error(error);
         });
@@ -207,14 +258,22 @@ function bindAuth() {
     function isAuth(){
         // Check authorization
         // See if access token is in URL
-        if (token === null) {
-            token = getAccessTokenFromUrl();
+        console.log(sessionStorage.getItem('token'));
+        if ((sessionStorage.getItem('token') == 'null') || (sessionStorage.getItem('token') == null)) {
+            console.log('token is null')
+            console.log(getAccessTokenFromUrl());
+            var urlToken = getAccessTokenFromUrl();
+            sessionStorage.setItem('token', urlToken);
+            console.log('token is null2')
+            console.log(sessionStorage.getItem('token'));
         }
         
-        if ((token === null) || (token === 'access_denied')) {
+         if ((sessionStorage.getItem('token') == 'null') || (sessionStorage.getItem('token') === 'access_denied')) {
+             console.log("false")
             return false;
         }
         else {
+            console.log("true");
             return true;
         }
     }
