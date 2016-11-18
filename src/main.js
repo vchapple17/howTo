@@ -6,18 +6,16 @@ var token = null;
 var baseUrl = "http://localhost:8080/";
 //var baseUrl = "https://web.engr.oregonstate.edu/~chapplev";
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('home_link').href = baseUrl;
+});
 document.addEventListener('DOMContentLoaded', setUpBootstrapListeners);
-document.addEventListener('DOMContentLoaded', updateHomeURL);
 document.addEventListener('DOMContentLoaded', bindAuth);
 window.addEventListener('load', scrollToHash);
-
 window.addEventListener('hashchange', function() {
     scrollBy(0, -70)
 });
 
-function updateHomeURL() {
-    document.getElementById('home_link').href = baseUrl;
-}
 function scrollToHash() {
     if (window.location.hash !== null) {
 
@@ -48,13 +46,6 @@ function scrollToHash() {
             });
             location.hash = hash;
         }
-//        else if (hash === "#chooser_saver") {
-//            $('#collapseChooserSaver').collapse({
-//                toggle: true
-//            });
-//            location.hash = hash;
-//        }
-
     }
 }
 
@@ -99,15 +90,6 @@ function setUpBootstrapListeners() {
         window.location.hash = "";
         scrollToHash();
     });
-    
-//    $('#collapseChooserSaver').on('shown.bs.collapse', function () {
-//        window.location.hash = "chooser_saver";
-//    });
-//
-//    $('#collapseChooserSaver').on('hidden.bs.collapse', function () {
-//        window.location.hash = "";
-//        scrollToHash();
-//    });
 }
 
 function bindAuth() {
@@ -122,6 +104,37 @@ function bindAuth() {
         });
     };
 
+    var createFolderBtn = document.getElementById('createFolderBtn');
+    if (createFolderBtn !== null) {
+        createFolderBtn.addEventListener('click', function() {
+            var myDropbox = new Dropbox({accessToken: token});
+            var foldername = "How To Tutorial Folder";
+            myDropbox.filesCreateFolder({path: '/'+foldername, autorename: true}).then( function(response) {
+                console.log("created folder");
+                console.log(response.name);
+                myDropbox.filesListFolder({path: ''}).then(function(response) {
+                        displayFiles(response.entries);
+                        displayFolderSuccess(foldername);
+                    }, function(error) {
+                        console.error(error);
+                        displayFolderError(foldername);
+                })
+            }, function(error) {
+                console.error(error);
+            }
+            );
+        });
+    }
+    
+    var revokeBtn = document.getElementById('revokeBtn');
+    if (revokeBtn !== null) {
+        revokeBtn.addEventListener('click', function() {
+            var myDropbox = new Dropbox({ accessToken: token});
+            myDropbox.authTokenRevoke();
+            token = null;
+            location = baseUrl;
+        });
+    }
 
     // Display appropriate divs
     if(isAuth()) {
@@ -133,17 +146,15 @@ function bindAuth() {
         var myDropbox = new Dropbox({ accessToken: token});
         
         myDropbox.filesListFolder({path: ''}).then(function(response) {
-            // returns: http://dropbox.github.io/dropbox-sdk-js/global.html#FilesListFolderResult
-            displayFiles(response.entries);
-            // enterieshttp://dropbox.github.io/dropbox-sdk-js/global.html#FilesFileMetadata
+            displayFiles(response.entries, 10);
             location.hash = "#auth-demo";
-            scrollToHash;
+            scrollToHash();
         }, function(error) {
             console.error(error);
         })
     }
     else {
-        // Not authorized, show button
+        // Not authorized, show button div
         document.getElementById("no_auth_div").style.display = 'block';
         document.getElementById("authed_div").style.display = 'none';
     }
@@ -199,25 +210,46 @@ function bindAuth() {
         return null;
     };
 
+    function displayFolderError(foldername) {
+        var errorDiv = document.getElementById('Error');
+        var h4 = document.createElement('h4');
+        
+        h4.textContent = "Error creating folder: " + foldername;
+        errorDiv.appendChild(h4);
+        errorDiv.style.display = 'block';
+    }
+    function displayFolderSuccess(foldername) {
+        console.log("folder success");
+        var successDiv = document.getElementById('folderCreated');
+        var h4 = document.createElement('h4');
+        h4.textContent = "Look for the \"" + foldername + "\" created.";
+        successDiv.appendChild(h4);
+        successDiv.style.display = 'block';
+    }
+    
     // Function to display files of "FilesListFolderResult"
-    function displayFiles(files){
+    function displayFiles(files, max){
         var filesDiv = document.getElementById('files');
         filesDiv.textContent = '';
         var ol = document.createElement('ol');
         ol.id = "fileList";
         filesDiv.appendChild(ol);
 
-        for (var i = 0; i < 10; i++) {
+        if (max === undefined) {        
+            files.forEach(function(file) {
             var li = document.createElement('li');
-            li.innerHTML = files[i].name;
+            li.innerHTML = file.name;
             ol.appendChild(li);
-        };
+            });
+        }
+        else {
+            for (var i = 0; i < max; i++) {
+                var li = document.createElement('li');
+                li.innerHTML = files[i].name;
+                ol.appendChild(li);
+            };
+        }
 
-//        files.forEach(function(file) {
-//            var li = document.createElement('li');
-//            li.innerHTML = file.name;
-//            ol.appendChild(li);
-//        });
     };
 
 }
